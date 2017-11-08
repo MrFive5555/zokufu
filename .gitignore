@@ -1,5 +1,5 @@
 # output in dot
-dot_demo/*.svg
+# dot_demo/*.svg
 
 # Prerequisites
 *.d
