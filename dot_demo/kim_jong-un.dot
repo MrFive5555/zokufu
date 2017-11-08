@@ -1,0 +1,21 @@
+digraph kju{
+  graph [ordering="out"];
+  null0,null1,null2,null3,null4,null5[shape=point];
+  金正日->金英淑;
+  金正日->null0;
+  金英淑->高英姫;
+  金英淑->金雪松;
+  金雪松->null1;
+  金雪松->金春松;
+  高英姫->null2;
+  高英姫->金正哲;
+  金正哲->null3;
+  金正哲->金正恩;
+  金正恩->李雪主;
+  金正恩->金与正;
+  李雪主->null4;
+  李雪主->女子;
+  女子->null5;
+  女子->金主愛;
+  
+}

@@ -1,3 +1,6 @@
+# output in dot
+dot_demo/*.svg
+
 # Prerequisites
 *.d
 
