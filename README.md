@@ -7,6 +7,11 @@
 * 准备上台展示吧, 每个人都要上台
 ><del>高太公说站在上面的组员才能混到课堂小分</del>
 
+## Requirements from darren
+
+* 2-space indent
+* many a small file (no indexing plugin, sorry)
+
 ## Todo
 
 ###### 人
