@@ -47,26 +47,20 @@ Tree<id_t> zokufu;
 
 ###### wty
 
-* ?
+* 存储顾问
+* 
 
 ###### <ruby>Mr.Five555<rt>海龟大佬</rt></ruby>
 
-* ?
+* 提供头文件, 指定接口
+* 系统设计
 
 ###### Darren
 
-* 提供**所有**头文件, 强行指定接口标准
-* 强行推销GraphViz和Boost库
-* 学习pull requests模型
-* 想办法让Visual Studio的sln和Makefile协作(至少不打架)
-* DOT输出担当(尽快做出静态示例)
-* 整理实验报告, 学习使用WYSIWYG软件
-
-## 废话后面也有
-
-* 使用union和类型标签模拟弱变量?
-* rst替md
-
+* repo管理
+* 矢量图生成
+* 平台依赖顾问
+* 文档?
 
 
 
