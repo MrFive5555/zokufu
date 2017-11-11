@@ -12,8 +12,8 @@
 using namespace std;
 
 /*
-* PersonÊÇ´¢´æÃ¿¸ö¾ßÌåÈËĞÅÏ¢µÄÀà
-* ¶Ô´íÎó»òÎ´¶¨ÒåµÄPerson£¬nameÊôĞÔÎª¿Õ×Ö·û´®
+* Personæ˜¯å‚¨å­˜æ¯ä¸ªå…·ä½“äººä¿¡æ¯çš„ç±»
+* å¯¹é”™è¯¯æˆ–æœªå®šä¹‰çš„Personï¼Œnameå±æ€§ä¸ºç©ºå­—ç¬¦ä¸²
 */
 class Person {
 public:
@@ -23,170 +23,160 @@ public:
     } Gender;
 
     /*
-    * ¶Ô´íÎó»òÎ´¶¨ÒåµÄDate£¬ËùÓĞÊ±¼ä¶¼¶¨Îª0
+    * å¯¹é”™è¯¯æˆ–æœªå®šä¹‰çš„Dateï¼Œæ‰€æœ‰æ—¶é—´éƒ½å®šä¸º0
     */
-    class Date {
-    public:
-        Date(int year, int month, int day) : year(year), month(month), day(day) {
-            if (!isValid()) {
-                year = month = day = 0;
-            }
-        };
-        int getYear() const;
-        int getMonth() const;
-        int getDay() const;
-        bool setYear(int newYear);
-        bool setMonth(int newMonth);
-        bool setDay(int newDay);
-    private:
-        int year;
-        int month;
-        int day;
-        bool isValid() const;
+    struct Date {
+    	// aggregate class(struct), all public
+      Date(int year, int month, int day) : year(year), month(month), day(day) {
+          if (!isValid()) {
+              year = month = day = 0;
+          }
+      };
+      int year;
+      int month;
+      int day;
+      bool isValid() const;
     };
-
-    Person() : name(""), birthday(birthday), gender(gender) {};
+    // a person's birthday and gender cannot be changed
+    Person()=delete;
     Person(string name, Date birthday, Gender gender) : name(name), birthday(birthday), gender(gender) {}
     string getName() const;
-    Date getBirthday() const;
-    Gender getGender() const;
     bool setName();
-    bool setBirthday();
-    bool setGender();
+public:
+    const Date birthday;
+    const Gender gender;
 private:
     string name;
-    Date birthday;
-    Gender gender;
 };
 
 /*
-* idºÅµÄÀàĞÍ
-* ¶Ô´íÎó»òÎ´¶¨ÒåµÄid£¬Ó¦¸³ÖµÎªUNDEFINE_ID
+* idå·çš„ç±»å‹
+* å¯¹é”™è¯¯æˆ–æœªå®šä¹‰çš„idï¼Œåº”èµ‹å€¼ä¸ºUNDEFINE_ID
 */
 typedef int id_t;
 const id_t UNDEFINE_ID = INT_MAX;
 
 /*
-* ÔÚ¼ÒÆ×GenalogyÖĞ£¬ËùÓĞÒÑ¼ÓÈë¼ÒÆ×ÖĞµÄPerson¶¼½«»ñµÃÒ»¸öÎ¨Ò»µÄ
-* µÄid£¬Ê¹ÓÃid¿ÉÒÔ²éÑ¯µ½¾ßÌåÄ³Ò»¸öPerson
+* åœ¨å®¶è°±Genalogyä¸­ï¼Œæ‰€æœ‰å·²åŠ å…¥å®¶è°±ä¸­çš„Personéƒ½å°†è·å¾—ä¸€ä¸ªå”¯ä¸€çš„
+* çš„idï¼Œä½¿ç”¨idå¯ä»¥æŸ¥è¯¢åˆ°å…·ä½“æŸä¸€ä¸ªPerson
 * ======================================================
-* Êı¾İ½á¹¹£º²ÉÓÃÒ»ÖÖÀàÊ÷µÄ½á¹¹¡£
-* Ê÷µÄÄ³¸ö½ÚµãÓĞÈı¸öÖ¸Õë£ºÒ»¸öÖ¸ÏòËûµÄĞÖµÜ£¬Ò»¸öÖ¸ÏòËûµÄº¢×Ó£¬ÁíÒ»¸öÖ¸Ïò×Ô¼ºµÄÄ¸Ç×¡£
-*     ÓÉÓÚ²ÉÓÃÁËÄ¸Ç×Ö¸ÕëµÄ·½Ê½£¬ÊÂÊµÉÏÕâ¸ö¼ÒÆ×²»ÊÇÒ»¿ÃÑÏ¸ñÒâÒåÉÏµÄÊ÷£¬
-*     µ«Èç¹û°ÑËùÓĞ½ÚµãµÄÄ¸Ç×Ö¸ÕëÈ¥µô£¬¾ÍÊÇÒ»¿ÃÍêÕûµÄÊ÷ÁË¡£
+* æ•°æ®ç»“æ„ï¼šé‡‡ç”¨ä¸€ç§ç±»æ ‘çš„ç»“æ„ã€‚
+* æ ‘çš„æŸä¸ªèŠ‚ç‚¹æœ‰ä¸‰ä¸ªæŒ‡é’ˆï¼šä¸€ä¸ªæŒ‡å‘ä»–çš„å…„å¼Ÿï¼Œä¸€ä¸ªæŒ‡å‘ä»–çš„å­©å­ï¼Œå¦ä¸€ä¸ªæŒ‡å‘è‡ªå·±çš„æ¯äº²ã€‚
+*     ç”±äºé‡‡ç”¨äº†æ¯äº²æŒ‡é’ˆçš„æ–¹å¼ï¼Œäº‹å®ä¸Šè¿™ä¸ªå®¶è°±ä¸æ˜¯ä¸€æ£µä¸¥æ ¼æ„ä¹‰ä¸Šçš„æ ‘ï¼Œ
+*     ä½†å¦‚æœæŠŠæ‰€æœ‰èŠ‚ç‚¹çš„æ¯äº²æŒ‡é’ˆå»æ‰ï¼Œå°±æ˜¯ä¸€æ£µå®Œæ•´çš„æ ‘äº†ã€‚
 *
-* ¶ÔÄ³¸ö¸ø¶¨µÄ½Úµã£¬Òª²éÕÒ¶ÔÓ¦¹ØÏµµÄ·½·¨£º
-* ¸¸Ç×£º±éÀú¶ş²æÊ÷£¬Ö±µ½ÕÒµ½º¢×ÓÎª¸ø¶¨½ÚµãµÄ½Úµã£¬Îª¸ø¶¨½ÚµãµÄ¸¸Ç×
-* Ä¸Ç×£ºÖ±½Ó·ÃÎÊÄ¸Ç×Ö¸Õë¶ÔÓ¦µÄ½Úµã
-* ĞÖµÜ£ºµÃµ½¸¸Ç×½Úµã£¬²¢µÃµ½¸¸Ç×ËùÓĞµÄº¢×Ó
-* º¢×Ó£º±éÀúº¢×ÓÖ¸Õë¼°º¢×ÓµÄĞÖµÜ
-* ÆŞ×Ó£º±éÀúËùÓĞµÄº¢×Ó£¬ËùÓĞº¢×ÓÄ¸Ç×µÄ¼¯ºÏ£¬¾ÍÊÇ¸ø¶¨½ÚµãµÄÆŞ×Ó
+* å¯¹æŸä¸ªç»™å®šçš„èŠ‚ç‚¹ï¼Œè¦æŸ¥æ‰¾å¯¹åº”å…³ç³»çš„æ–¹æ³•ï¼š
+* çˆ¶äº²ï¼šéå†äºŒå‰æ ‘ï¼Œç›´åˆ°æ‰¾åˆ°å­©å­ä¸ºç»™å®šèŠ‚ç‚¹çš„èŠ‚ç‚¹ï¼Œä¸ºç»™å®šèŠ‚ç‚¹çš„çˆ¶äº²
+* æ¯äº²ï¼šç›´æ¥è®¿é—®æ¯äº²æŒ‡é’ˆå¯¹åº”çš„èŠ‚ç‚¹
+* å…„å¼Ÿï¼šå¾—åˆ°çˆ¶äº²èŠ‚ç‚¹ï¼Œå¹¶å¾—åˆ°çˆ¶äº²æ‰€æœ‰çš„å­©å­
+* å­©å­ï¼šéå†å­©å­æŒ‡é’ˆåŠå­©å­çš„å…„å¼Ÿ
+* å¦»å­ï¼šéå†æ‰€æœ‰çš„å­©å­ï¼Œæ‰€æœ‰å­©å­æ¯äº²çš„é›†åˆï¼Œå°±æ˜¯ç»™å®šèŠ‚ç‚¹çš„å¦»å­
 *
 */
 class Genealogy {
 public:
     /*
-    * ÊäÈë£ºvoid
-    * Êä³ö£º·µ»ØÒ»¸öÖ¸ÏòÒÑ´´½¨µÄGenealogyÖ¸Õë
-    * ËµÃ÷£ºµ¥ÀıÄ£Ê½£¬Ê¹È«¾Ö½öÓĞÒ»¸öGenealogy
-    *       µ±ÊµÀı±»µÚÒ»´Î´´½¨µÄÊ±ºò£¬¶ÁÈ¡ÒÑ´æÔÚÎÄ¼şÖĞµÄ¼ÒÆ×
+    * è¾“å…¥ï¼švoid
+    * è¾“å‡ºï¼šè¿”å›ä¸€ä¸ªæŒ‡å‘å·²åˆ›å»ºçš„GenealogyæŒ‡é’ˆ
+    * è¯´æ˜ï¼šå•ä¾‹æ¨¡å¼ï¼Œä½¿å…¨å±€ä»…æœ‰ä¸€ä¸ªGenealogy
+    *       å½“å®ä¾‹è¢«ç¬¬ä¸€æ¬¡åˆ›å»ºçš„æ—¶å€™ï¼Œè¯»å–å·²å­˜åœ¨æ–‡ä»¶ä¸­çš„å®¶è°±
     */
     Genealogy* getInstance();
 
     /*
-    * ÊäÈë£ºvoid
-    * Êä³ö£ºvoid
-    * ËµÃ÷£º°Ñ¼ÒÆ×µ±Ç°×´Ì¬Ğ´ÈëÎÄ¼ş
+    * è¾“å…¥ï¼švoid
+    * è¾“å‡ºï¼švoid
+    * è¯´æ˜ï¼šæŠŠå®¶è°±å½“å‰çŠ¶æ€å†™å…¥æ–‡ä»¶
     */
     void sync();
 
     /*
-    * ÊäÈë£ºÒÑ´æÔÚµÄPerson»òid
-    * Êä³ö£º¶ÔÓ¦µÄid»òPerson¶ÔÏó
-    * ËµÃ÷£ºµ±ĞèÒª²éÑ¯µÄPerson²»´æÔÚÊ±£¬·µ»ØUNDEFINE_ID
-    *       µ±ĞèÒª²éÑ¯µÄid²»´æÔÚÊ±£¬·µ»ØÒ»¸öÄ¬ÈÏ¹¹ÔìµÄPerson
+    * è¾“å…¥ï¼šå·²å­˜åœ¨çš„Personæˆ–id
+    * è¾“å‡ºï¼šå¯¹åº”çš„idæˆ–Personå¯¹è±¡
+    * è¯´æ˜ï¼šå½“éœ€è¦æŸ¥è¯¢çš„Personä¸å­˜åœ¨æ—¶ï¼Œè¿”å›UNDEFINE_ID
+    *       å½“éœ€è¦æŸ¥è¯¢çš„idä¸å­˜åœ¨æ—¶ï¼Œè¿”å›ä¸€ä¸ªé»˜è®¤æ„é€ çš„Person
     */
     id_t getId(const Person& person);
     Person& getPersonById(id_t id) const;
 
     /*
-    * ÊäÈë£ºÒÑ´æÔÚµÄPerson»òid
-    * Êä³ö£º¶ÔÓ¦µÄid»òPerson¶ÔÏó
-    * ËµÃ÷£ºµ±Ä¸Ç×½ÚµãÎª¿ÕÊ±£¬·µ»ØÄ¬ÈÏ¹¹ÔìµÄPerson
+    * è¾“å…¥ï¼šå·²å­˜åœ¨çš„Personæˆ–id
+    * è¾“å‡ºï¼šå¯¹åº”çš„idæˆ–Personå¯¹è±¡
+    * è¯´æ˜ï¼šå½“æ¯äº²èŠ‚ç‚¹ä¸ºç©ºæ—¶ï¼Œè¿”å›é»˜è®¤æ„é€ çš„Person
     */
     Person& father(id_t id) const;
     Person& monther(id_t id) const;
 
     /*
-    * ÊäÈë£ºÒÑ´æÔÚid
-    * Êä³ö£º¶ÔÓ¦id¸¸Ç×»òÄ¸Ç×µÄid
-    * ËµÃ÷£ºµ±Ä¸Ç×½ÚµãÎª¿ÕÊ±£¬·µ»ØUNDEFINE_ID
+    * è¾“å…¥ï¼šå·²å­˜åœ¨id
+    * è¾“å‡ºï¼šå¯¹åº”idçˆ¶äº²æˆ–æ¯äº²çš„id
+    * è¯´æ˜ï¼šå½“æ¯äº²èŠ‚ç‚¹ä¸ºç©ºæ—¶ï¼Œè¿”å›UNDEFINE_ID
     */
     id_t getFather(id_t id) const;
     id_t getMonther(id_t id) const;
 
     /*
-    * ÊäÈë£ºÒÑ´æÔÚid
-    * Êä³ö£º¶ÔÓ¦idµÄĞÖµÜ£¨°´´óĞ¡ÅÅĞò£©£¬ÆŞ×Ó£¨ÈÎÒâË³Ğò£©£¬º¢×Ó£¨°´´óĞ¡ÅÅĞò£©µÄvector¼¯ºÏ
-    * ËµÃ÷£ºµ±Ä¸Ç×½ÚµãÎª¿ÕÊ±£¬·µ»ØUNDEFINE_ID
+    * è¾“å…¥ï¼šå·²å­˜åœ¨id
+    * è¾“å‡ºï¼šå¯¹åº”idçš„å…„å¼Ÿï¼ˆæŒ‰å¤§å°æ’åºï¼‰ï¼Œå¦»å­ï¼ˆä»»æ„é¡ºåºï¼‰ï¼Œå­©å­ï¼ˆæŒ‰å¤§å°æ’åºï¼‰çš„vectoré›†åˆ
+    * è¯´æ˜ï¼šå½“æ¯äº²èŠ‚ç‚¹ä¸ºç©ºæ—¶ï¼Œè¿”å›UNDEFINE_ID
     */
     vector<id_t> getBrother(id_t id) const;
     vector<id_t> getWift(id_t id) const;
     vector<id_t> getChild(id_t id) const;
 
     /*
-    * ÊäÈë£ºÒÑ´æÔÚµÄÒ»¸öPerson
-    * Êä³ö£ºÈôÊäÈëµÄPerson´æÔÚ£¬·µ»Øtrue£»Èô²»´æÔÚ£¬·µ»Øfalse
-    * ËµÃ÷£º°ÑÊäÈëµÄPersonÉèÖÃ³ÉÊ÷µÄ¸ù
+    * è¾“å…¥ï¼šå·²å­˜åœ¨çš„ä¸€ä¸ªPerson
+    * è¾“å‡ºï¼šè‹¥è¾“å…¥çš„Personå­˜åœ¨ï¼Œè¿”å›trueï¼›è‹¥ä¸å­˜åœ¨ï¼Œè¿”å›false
+    * è¯´æ˜ï¼šæŠŠè¾“å…¥çš„Personè®¾ç½®æˆæ ‘çš„æ ¹
     */
     bool addRoot(const Person& grandFather);
 
     /*
-    * ÊäÈë£ºfatherId£º¸¸Ç×µÄid
-    *       motherId£ºÄ¸Ç×µÄid
-    *       childIdĞèÒª²åÈëº¢×ÓµÄid
-    * Êä³ö£ºÈôÆäÖĞÒ»¸öid²»´æÔÚ»òidÒÑÔÚ¼ÒÆ×ÖĞ£¬·µ»Øfalse£»·ñÔò·µ»Øtrue
-    * ËµÃ÷£ºchildId¶ÔÓ¦µÄ
+    * è¾“å…¥ï¼šfatherIdï¼šçˆ¶äº²çš„id
+    *       motherIdï¼šæ¯äº²çš„id
+    *       childIdéœ€è¦æ’å…¥å­©å­çš„id
+    * è¾“å‡ºï¼šè‹¥å…¶ä¸­ä¸€ä¸ªidä¸å­˜åœ¨æˆ–idå·²åœ¨å®¶è°±ä¸­ï¼Œè¿”å›falseï¼›å¦åˆ™è¿”å›true
+    * è¯´æ˜ï¼šchildIdå¯¹åº”çš„
     */
     bool addChild(id_t fatherId, id_t motherId, id_t childId);
 
     /*
-    * ÊäÈë£ºfatherId £º, id_t motherId, id_t childId
-    * Êä³ö£ºÈôÊäÈëµÄPerson´æÔÚ£¬·µ»Øtrue£»Èô²»´æÔÚ£¬·µ»Øfalse
-    * ËµÃ÷£º°ÑÊäÈëµÄPersonÉèÖÃ³ÉÊ÷µÄ¸ù
+    * è¾“å…¥ï¼šfatherId ï¼š, id_t motherId, id_t childId
+    * è¾“å‡ºï¼šè‹¥è¾“å…¥çš„Personå­˜åœ¨ï¼Œè¿”å›trueï¼›è‹¥ä¸å­˜åœ¨ï¼Œè¿”å›false
+    * è¯´æ˜ï¼šæŠŠè¾“å…¥çš„Personè®¾ç½®æˆæ ‘çš„æ ¹
     */
     bool removeChild(id_t id);
 
     /*
-    * ÊäÈë£ºexec£º¶Ô¼ÒÆ×ÄÚÃ¿Ò»¸ö³ÉÔ±Ö´ĞĞexecº¯Êı
-    * Êä³ö£ºÈôÊäÈëµÄPerson´æÔÚ£¬·µ»Øtrue£»Èô²»´æÔÚ£¬·µ»Øfalse
-    * ËµÃ÷£º°ÑÊäÈëµÄPersonÉèÖÃ³ÉÊ÷µÄ¸ù
+    * è¾“å…¥ï¼šexecï¼šå¯¹å®¶è°±å†…æ¯ä¸€ä¸ªæˆå‘˜æ‰§è¡Œexecå‡½æ•°
+    * è¾“å‡ºï¼šè‹¥è¾“å…¥çš„Personå­˜åœ¨ï¼Œè¿”å›trueï¼›è‹¥ä¸å­˜åœ¨ï¼Œè¿”å›false
+    * è¯´æ˜ï¼šæŠŠè¾“å…¥çš„Personè®¾ç½®æˆæ ‘çš„æ ¹
     */
     void traverse(function<void(const id_t id)>exec);
 
     /*
-    * ÊäÈë£ºvoid
-    * Êä³ö£ºvoid
-    * ËµÃ÷£º°Ñ¼ÒÆ×°´ÕÕÌØ¶¨µÄ¸ñÊ½Êä³ö
+    * è¾“å…¥ï¼švoid
+    * è¾“å‡ºï¼švoid
+    * è¯´æ˜ï¼šæŠŠå®¶è°±æŒ‰ç…§ç‰¹å®šçš„æ ¼å¼è¾“å‡º
     */
     void display() const;
 private:
     Genealogy();
 
-    class TreeNode {
-        id_t id;
-        shared_ptr<TreeNode> mother;
-        shared_ptr<TreeNode> child;
-        shared_ptr<TreeNode> brother;
+    struct TreeNode {
+      id_t id;
+      shared_ptr<TreeNode> mother;
+      shared_ptr<TreeNode> child;
+      shared_ptr<TreeNode> brother;
     };
     map<id_t, Person&> idMap;
     shared_ptr<TreeNode> root;
 
     /*
-    * ÊäÈë£ºvoid
-    * Êä³ö£ºÒ»¸öĞÂµÄid
-    * ËµÃ÷£ºÃ¿´Î°ÑĞÂµÄPerson²åÈë¼ÒÆ×Ê±£¬ĞèÒªÍùidMapÀï²åÈëÒ»¸ö(id, Person)¶Ô£¬
-    *       ¸Ãº¯ÊıÓÃÀ´Éú³ÉÒ»¸öÎ´±»Ê¹ÓÃµÄidºÅ
+    * è¾“å…¥ï¼švoid
+    * è¾“å‡ºï¼šä¸€ä¸ªæ–°çš„id
+    * è¯´æ˜ï¼šæ¯æ¬¡æŠŠæ–°çš„Personæ’å…¥å®¶è°±æ—¶ï¼Œéœ€è¦å¾€idMapé‡Œæ’å…¥ä¸€ä¸ª(id, Person)å¯¹ï¼Œ
+    *       è¯¥å‡½æ•°ç”¨æ¥ç”Ÿæˆä¸€ä¸ªæœªè¢«ä½¿ç”¨çš„idå·
     */
     id_t getNewId();
 };
