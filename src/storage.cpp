@@ -76,6 +76,7 @@ void storage::mate_might_birth(const vector<id_type> v){
 	// add mate
 	// add hierarchy
 	// check size
+
 	if(v.size()<2)
 		throw runtime_error(">=2 people needed");
 	// check gender
@@ -90,6 +91,7 @@ void storage::mate_might_birth(const vector<id_type> v){
 		add_edge(v[0],v[i],hierarchy);
 		add_edge(v[1],v[i],hierarchy);
 	}
+
 }
 // id_t storage::getId(const Person& person);
 // const Person& storage::getPersonById(id_type id) const{

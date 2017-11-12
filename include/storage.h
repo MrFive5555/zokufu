@@ -51,6 +51,7 @@ public:
   * 
   */
   void mate_might_birth(const vector<id_type>);
+  // void mate_might_birth();
 
   /*
   * 输入：fatherId ：, id_type motherId, id_type childId

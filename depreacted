@@ -139,6 +139,12 @@ boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::ch
 
 
 
+# genealogy.out: \
+# 	$(D_OUT)/util.o \
+# 	$(D_OUT)/storage.o \
+# 	$(D_OUT)/main.o
+# 	$(CC) $^ $(F_LINK) -o $@
+
 
 
 
