@@ -57,7 +57,6 @@ int main(int argc, char** argv) {
 		if(COMMAND("mate")){
 			const vector<id_type> idVec=getIdParameters();
 			s->mate_might_birth(idVec);
-			// s->mate_might_birth();
 			s->sync();
 		}
 	}
