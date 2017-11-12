@@ -1,5 +1,6 @@
 // person.h
-#include <string>
+#ifndef PERSON_H
+#define PERSON_H
 #include "main.h"
 using namespace std;
 /*
@@ -27,3 +28,4 @@ struct Person{
   const date_t death_month;
   const date_t death_day;
 };
+#endif

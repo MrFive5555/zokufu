@@ -39,15 +39,17 @@ using std::cout;
 using boost::graph_traits;
 ```
 
-* read graphviz
+* test read graphviz
 * Focus color
 * Add relationship ("birth()"?) (Parameter Pack ?)
 * Optimize -O3 on final release
-* In g++ command, put -lxx after .o files
+* sh build boost_graph boost_regex
 
 # Done
 
 *	1 ~~marriage~~ mate digraph and 1 hierarchy graph
 * Output to graphviz
+* In g++ command, put -lxx after .o files
+* read graphviz
 
 

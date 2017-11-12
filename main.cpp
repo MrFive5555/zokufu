@@ -22,7 +22,18 @@ void sure(const string msg){
 	cout<<"Press <Enter> to proceed, <Ctrl-C> to abort: "<<endl;
 	cin.get();
 }
+int argc_g=0;
+char** argv_g=nullptr;
+vector<id_type> getIdParameters(){
+	vector<id_type> ret;
+	for(int i=2;i!=argc_g;++i){
+		ret.push_back(stoul(argv_g[i]));
+	}
+	return ret;
+}
 int main(int argc, char** argv) {
+	argc_g=argc;
+	argv_g=argv;
 	storage* s=storage::getInstance();
 	// the two blocks below don't need to read file
 	{
@@ -43,7 +54,10 @@ int main(int argc, char** argv) {
 	// the ? number of choices below requires reading file
 	s->load();
 	{
-		// cout<<execDir()<<endl;
-		// cout<<argv[0]<<endl;
+		if(COMMAND("mate")){
+			const vector<id_type> idVec=getIdParameters();
+			s->mate_might_birth(idVec);
+			s->sync();
+		}
 	}
 }

@@ -1,14 +1,33 @@
-#include <iostream>
-#include <fstream>
-#include"person.h"
-
+#include"main.h"
 using namespace std;
 
 int main() {
-	// Person p1{MALE,123};
-	// Person p2{};
-	// Person p3{FEMALE};
-	cout<<static_cast<bool>(int(1));
-	cout<<static_cast<bool>(int(0));
-	cout<<static_cast<bool>(int(-1));
+	Digraph dg;
+	add_edge(0,3,dg);
+	// for(unsigned i:{1,2})
+	// 	remove_vertex(i,dg);
+
+
+  // for (;vp.first != vp.second; ++vp.first){
+  //   std::cout << *vp.first << "=" << index[*vp.first] <<  ", ";
+  // }
+
+	typedef property_map<Digraph, vertex_index_t>::type IndexMap;
+	IndexMap index=get(vertex_index,dg);
+
+	graph_traits<Digraph>::vertex_iterator vi, vi_end, next;
+	tie(vi, vi_end) = vertices(dg);
+	for (next = vi; vi != vi_end; vi = next) {
+		++next;
+		if(index[*vi]==1){
+			remove_vertex(*vi,dg);
+			break;
+		}
+	}
+
+	write_graphviz(cout,dg);
+
+
+
+	return 0;
 }

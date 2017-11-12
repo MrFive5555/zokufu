@@ -64,7 +64,7 @@ void display_dot(const string dotfile){
   // while(noext.back()!='.')
     // noext.pop_back();
   system((string()+"dot -Tsvg -O "+dotfile).c_str());
-  system((string()+"xdg-open "+dotfile+".svg").c_str());
+  system((string()+"chromium-browser "+dotfile+".svg").c_str());
 }
 // <<< Linux
 #else

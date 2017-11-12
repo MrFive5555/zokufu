@@ -1,13 +1,6 @@
-#include<stdexcept>
-#include<iostream>
-#include<fstream>
-#include <boost/graph/graphviz.hpp>
+#include"main.h"
 #include"person.h"
 #include"storage.h"
-#include"main.h"
-// avoid -lpthread
-#define CSV_IO_NO_THREAD
-#include"csv.h"
 
 // #include"read_graphviz_new.cpp"
 
@@ -77,6 +70,26 @@ void storage::sync(){
   write_graphviz(m,mate);
   h.close();
   m.close();
+}
+void storage::mate_might_birth(const vector<id_type> v){
+	// check incest
+	// add mate
+	// add hierarchy
+	// check size
+	if(v.size()<2)
+		throw runtime_error(">=2 people needed");
+	// check gender
+	auto gpair=std::tie(idMap.at(v[0]).gender,idMap.at(v[1]).gender);
+	if(gpair!=make_tuple(FEMALE,MALE)&&gpair!=make_tuple(MALE,FEMALE))
+		throw runtime_error("No homosexuality please");
+	add_edge(v[0],v[1],mate);
+	for(size_t i=2;i!=v.size();++i){
+		// check claimed child
+		if(num_vertices(hierarchy)>v[i] && in_degree(v[i],hierarchy)>0)
+			throw runtime_error(string()+"The child with id "+to_string(i)+" already has parent(s)");
+		add_edge(v[0],v[i],hierarchy);
+		add_edge(v[1],v[i],hierarchy);
+	}
 }
 // id_t storage::getId(const Person& person);
 // const Person& storage::getPersonById(id_type id) const{

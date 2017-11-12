@@ -1,5 +1,11 @@
 # Genealogy - todo list
 
+## What to show
+
+* claimed kid check
+* incest check
+* 
+
 ## Timeline
 
 * 周四没课, DDL就当它`2017-11-14(Tuesday)`好了
@@ -13,6 +19,7 @@
 * [Boost C++ Library](http://www.boost.org)
 	* [Graph](http://www.boost.org/doc/libs/1_65_1/libs/graph/doc/table_of_contents.html)
 * [fast-cpp-csv-parser](https://github.com/ben-strasser/fast-cpp-csv-parser)
+* https://stackoverflow.com/questions/12272864/linker-error-on-linux-undefined-reference-to
 
 
 ###### wty

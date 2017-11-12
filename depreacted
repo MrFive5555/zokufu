@@ -127,6 +127,16 @@ boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::ch
 
 boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::detail::graph::mutate_graph*)
 
+// #define HUSBAND_WIFE_WEIGHT 1
+// #define HUSBAND_WIFE_COLOR ""
+// #define WIFE_SUBSPRING_WEIGHT 2
+// #define WIFE_SUBSPRING_COLOR ""
+
+	// no need to check if already mated (parallel edge disallowed)
+	// if(!edge(v[0],v[1],mate).second)
+	
+// "unsigned" conflict with "NO_MOTHER"
+
 
 
 
