@@ -18,7 +18,7 @@
 ###### wty
 
 * 存储顾问
-* 
+* 文档
 
 ###### <ruby>Mr.Five555<rt>海龟大佬</rt></ruby>
 
@@ -30,35 +30,8 @@
 * repo管理
 * 矢量图生成
 * 平台依赖顾问
-* 文档?
 
-## Darren
-
-###### Unread
-
-* examples
-	* graph coloring
-* traits classes
-	* property_map
-* graph classes
-	* adjacency list
-* tutorial
-
-###### Read later
-
-* quick tour
-	* color
-	* visitor
-* graph i/o
-	* read_graphviz
-	* write_graphviz
-
-###### Todo
-
-0. Output to graphviz with color (weight)
-0. Add person (Parameter PAck)
-0. ...
-0. Optimize -O3 on final release
+# ?
 
 ###### Requirements
 
@@ -77,11 +50,6 @@ We focus on editing methods.
 
 >C标准time.h里面提供的time struct参考一波
 
-###### Requirements-图
+###### Rules
 
 * A male decendent can have multiple wives
-* A woman from other family can only marry once
-* Mate of female decendants are not counted
-* Changes of info which is part of a person requires seperate file-op module
-
-

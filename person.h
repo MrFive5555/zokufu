@@ -6,7 +6,7 @@ using namespace std;
 * Person是储存每个具体人信息的类
 * 对错误或未定义的Person，name属性为空字符串
 */
-struct Person {
+struct Person{
 public:
   // a person's birthday and gender cannot be changed
   // Person()=delete;
@@ -18,7 +18,14 @@ public:
   */
   const string name;
   const Gender gender;
+
   const id_type mother;
-  // const Date birthday;
-  // const Date deathday;
+
+  const date_t birth_year;
+  const date_t birth_month;
+  const date_t birth_day;
+
+  const date_t death_year;
+  const date_t death_month;
+  const date_t death_day;
 };
