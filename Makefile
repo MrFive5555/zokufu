@@ -8,20 +8,20 @@ LINK=$(CC)
 default:
 	@echo "no target given!"
 
-test:$(D_OUT)/test.out
+test:test.out
 	
-agenda:$(D_OUT)/genealogy.out
+genealogy:genealogy.out
 
-$(D_OUT)/test.out: \
+test.out: \
 	$(D_OUT)/test.o \
-	$(D_OUT)/storage.o \
-	$(D_OUT)/service.o
+	$(D_OUT)/util.o \
+	$(D_OUT)/storage.o
 	$(LINK) $^ -o $@
 
-$(D_OUT)/genealogy.out: \
+genealogy.out: \
 	$(D_OUT)/main.o \
-	$(D_OUT)/storage.o \
-	$(D_OUT)/service.o
+	$(D_OUT)/util.o \
+	$(D_OUT)/storage.o
 	$(LINK) $^ -o $@
 
 $(D_OUT)/%.o: %.cpp *.h

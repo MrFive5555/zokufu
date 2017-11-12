@@ -1,4 +1,0 @@
-// service.h
-class service{
-
-};

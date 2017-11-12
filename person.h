@@ -20,4 +20,5 @@ public:
   const Gender gender;
   const id_type mother;
   // const Date birthday;
+  // const Date deathday;
 };

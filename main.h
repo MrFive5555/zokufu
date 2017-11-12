@@ -5,7 +5,20 @@
 // #define WIFE_SUBSPRING_COLOR ""
 #ifndef MAIN_H
 #define MAIN_H
-typedef long id_type;
+
+#include<string>
+
+using namespace std;
+
 #define NO_MOTHER -1
+// #define RELATIONSHIP_FILENAME "relationship.csv"
+#define RELATIONSHIP_FILENAME "relationship.dot"
+#define PERSON_FILNAME "person.csv"
+
+typedef long id_type;
+
 enum Gender {MALE,FEMALE} ;
+
+extern string execDir();
+
 #endif

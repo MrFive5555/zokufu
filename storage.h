@@ -68,7 +68,12 @@ public:
   */
   static storage* getInstance();
 
-  void read();
+  /*
+  * 输入：void
+  * 输出：void
+  * 说明：read 2 files
+  */
+  void load();
   /*
   * 输入：void
   * 输出：void
@@ -153,6 +158,7 @@ public:
   * 说明：apply for a new id, add the person to map
   */
   void addPerson(const Person);
+  // void init();
 private:
   // singleton
   storage();
@@ -173,6 +179,4 @@ private:
   bool dirty;
   // id_type max_id;
 };
-// singleton
-storage* storage::instance=nullptr;
 #endif // !GENEALOGY_H_

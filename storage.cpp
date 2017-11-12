@@ -3,39 +3,42 @@
 #include"person.h"
 #include"storage.h"
 
-// #define RELATIONSHIP_FILENAME "relationship.csv"
-// #define RELATIONSHIP_FILENAME "relationship.dot"
-// #define PERSON_FILNAME "person.csv"
 
 using namespace std;
 using namespace boost;
-// Function implementations are in order of dependency,
-// not following the order in header.
-void storage::read(){
-	/*
-	* read person file to idMap
-	* deduct max_id from person file
-	* read relationship file to g
-	*/
-}
-storage::storage():g(),idMap(),dirty(false){
-	if(file_both_exist())
-		read();
-	else
-}
+
+
+// singleton jibberjabber
+storage* storage::instance=nullptr;
 storage* storage::getInstance(){
   // We never release the pointer. Leakage is ok.
   if(!instance)
     instance=new storage;
   return instance;
 }
+
+// new, init, read
+storage::storage():g(),idMap(){}
+// void storage::init(){
+// 	Graph h;
+// 	g=h;
+// 	sync();
+// }
+void storage::load(){
+	/*
+	* read person file to idMap
+	* deduct max_id from person file
+	* read relationship file to g
+	*/
+}
+
+// write
 void storage::sync()const{
-	if(dirty){
 	/*
 	* 	write idMap to person file
 	* 	write g to relationship file
 	*/
-	}
+
 }
 id_type  storage::getNewId()const{
 	if(idMap.empty())
@@ -63,6 +66,8 @@ const Person& storage::getPersonById(id_type id) const{
 // bool storage::addChild(id_t fatherId, id_t motherId, id_t childId);
 // bool storage::removeChild(id_t id);
 // void storage::traverse(function<void(const id_t id)>exec);
-void storage::display() const;
+void storage::display() const{
+
+}
 
 

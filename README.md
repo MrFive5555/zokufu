@@ -6,37 +6,14 @@
 * 不给push权限, 我来批pull request
 * 准备上台展示吧, 每个人都要上台
 ><del>高太公说站在上面的组员才能混到课堂小分</del>
-
-## Requirements from darren
-
-* 2-space indent
-* many a small file (no indexing plugin, sorry)
-* Reference to the boost header are in &lt;&gt;  
-`g++ ... -isystem .`in Makefile makes them work.  
-If it won't compile on your platform, please contact me.
-* Since there isn't so many a person in a family chart in reality,  
-we don't provide many a query method.  
-Just make full use of your eyes and read the chart.  
-We focus on editing methods. 
-
-## Todo
-
-###### 人
-
-* 死活
-* 死亡年月日
->C标准time.h里面提供的time struct参考一波
-
-###### 图
-
-* Boost Graph library?
-* **output to file**
-* A male decendent can have multiple wives
-* A woman from other family can only marry once
-* Mate of female decendants are not counted
-* Changes of info which is part of a person requires seperate file-op module
-
 ## 分工(随做随记)
+
+## Special thanks
+
+* [Boost C++ Library](http://www.boost.org)
+	* [Graph](http://www.boost.org/doc/libs/1_65_1/libs/graph/doc/table_of_contents.html)
+* [fast-cpp-csv-parser](https://github.com/ben-strasser/fast-cpp-csv-parser)
+
 
 ###### wty
 
@@ -55,10 +32,9 @@ We focus on editing methods.
 * 平台依赖顾问
 * 文档?
 
+## Darren
 
-## Darren's Checklist (ordered)
-
-###### Unead
+###### Unread
 
 * examples
 	* graph coloring
@@ -77,13 +53,35 @@ We focus on editing methods.
 	* read_graphviz
 	* write_graphviz
 
-###### Do
+###### Todo
 
 0. Output to graphviz with color (weight)
 0. Add person (Parameter PAck)
 0. ...
 0. Optimize -O3 on final release
 
+###### Requirements
 
+* 2-space indent
+* many a small file (no indexing plugin, sorry)
+* Reference to the boost header are in &lt;&gt;  
+`g++ ... -isystem .`in Makefile makes them work.  
+If it won't compile on your platform, please contact me.
+* Since there isn't so many a person in a family chart in reality,  
+we don't provide many a query method.  
+Just make full use of your eyes and read the chart.  
+We focus on editing methods. 
+* Because this is a CLI program, we **always** sync() before exit.
+
+###### Requirements-人
+
+>C标准time.h里面提供的time struct参考一波
+
+###### Requirements-图
+
+* A male decendent can have multiple wives
+* A woman from other family can only marry once
+* Mate of female decendants are not counted
+* Changes of info which is part of a person requires seperate file-op module
 
 

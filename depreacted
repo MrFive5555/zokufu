@@ -15,3 +15,13 @@ default:
 
 # run:
 # 	./a.out
+
+
+
+			// storage*
+			// ofstream ofs;
+
+			// for(auto i:{RELATIONSHIP_FILENAME,PERSON_FILNAME}){
+			// 	ofs.open(i,ios_base::out|ios_base::trunc)
+			// 	ofs.close();
+			// }
