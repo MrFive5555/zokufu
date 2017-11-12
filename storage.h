@@ -25,11 +25,22 @@ using namespace boost;
 *   /usr/include/x86_64-linux-gnu/sys/types.h:104:16: note: previous declaration as ‘typedef __id_t id_t’
 *    typedef __id_t id_t;
 *
-* I have to change this type name (how about "id_t" -> "id_type" ?)
+* I have to change this type name ( "id_t" -> "id_type" )
 */
 typedef int id_type;
 const id_type UNDEFINE_ID = INT_MAX;
-typedef adjacency_list<vecS, vecS, bidirectionalS> Graph;
+typedef int edge_weight_property_t;
+typedef adjacency_list<
+  vecS, // OutEdgeList
+  vecS, // VertexList
+  bidirectionalS, // Directed
+  no_property, // VertexProperties
+  property<edge_weight_t, edge_weight_property_t>, // EdgeProperties
+  no_property, // GraphProperties
+  listS // EdgeList
+>Graph;
+typedef graph_traits<Graph>::vertex_descriptor Vertex;
+typedef std::pair<int,int> E;
 /*
 * 在家谱Genalogy中，所有已加入家谱中的Person都将获得一个唯一的
 * 的id，使用id可以查询到具体某一个Person
@@ -47,15 +58,15 @@ typedef adjacency_list<vecS, vecS, bidirectionalS> Graph;
 * 妻子：遍历所有的孩子，所有孩子母亲的集合，就是给定节点的妻子
 *
 */
-class Genealogy {
+class storage {
 public:
   /*
   * 输入：void
-  * 输出：返回一个指向已创建的Genealogy指针
-  * 说明：单例模式，使全局仅有一个Genealogy
+  * 输出：返回一个指向已创建的storage指针
+  * 说明：单例模式，使全局仅有一个storage
   *       当实例被第一次创建的时候，读取已存在文件中的家谱
   */
-  static Genealogy* getInstance();
+  static storage* getInstance();
 
   /*
   * 输入：void
@@ -136,11 +147,11 @@ public:
   void display() const;
 private:
 // singleton
-  Genealogy();
-  static Genealogy* instance;
+  storage();
+  static storage* instance;
   // the following two things involves file operation
   map<id_type, Person&> idMap;
-  Graph root;
+  Graph g;
 
   /*
   * 输入：void
@@ -151,5 +162,5 @@ private:
   id_type getNewId();
 };
 // singleton
-Genealogy* Genealogy::instance=nullptr;
+storage* storage::instance=nullptr;
 #endif // !GENEALOGY_H_

@@ -11,6 +11,13 @@
 
 * 2-space indent
 * many a small file (no indexing plugin, sorry)
+* Reference to the boost header are in &lt;&gt;  
+`g++ ... -isystem .`in Makefile makes them work.  
+If it won't compile on your platform, please contact me.
+* Since there isn't so many a person in a family chart in reality,  
+we don't provide many a query method.  
+Just make full use of your eyes and read the chart.  
+We focus on editing methods. 
 
 ## Todo
 
@@ -24,6 +31,10 @@
 
 * Boost Graph library?
 * **output to file**
+* A male decendent can have multiple wives
+* A woman from other family can only marry once
+* Mate of female decendants are not counted
+* Changes of info which is part of a person requires seperate file-op module
 
 ## 分工(随做随记)
 
@@ -43,6 +54,34 @@
 * 矢量图生成
 * 平台依赖顾问
 * 文档?
+
+
+## Darren's Checklist (ordered)
+
+###### Unead
+
+* examples
+	* graph coloring
+* traits classes
+	* property_map
+* graph classes
+	* adjacency list
+* tutorial
+
+###### Read later
+
+* quick tour
+	* color
+	* visitor
+* graph i/o
+	* read_graphviz
+	* write_graphviz
+
+###### Do
+
+0. Output to graphviz with color (weight)
+0. Add person (Parameter PAck)
+0. 
 
 
 

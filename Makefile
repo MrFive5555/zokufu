@@ -1,7 +1,7 @@
 compile:
-	g++ -std=c++11 -c  -Wall -isystem . genealogy.cpp
+	g++ -std=c++11 -c  -Wall -isystem . storage.cpp
 clean:
-	rm *.o *.gch *.out
+	-rm *.o *.gch *.out *.exe *.dll *.obj
 
 
 
