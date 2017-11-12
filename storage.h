@@ -27,16 +27,14 @@ using namespace boost;
 *
 * I have to change this type name ( "id_t" -> "id_type" )
 */
-typedef int id_type;
-const id_type UNDEFINE_ID = INT_MAX;
 
-typedef int edge_weight_property_t;
+
 typedef adjacency_list<
   vecS, // OutEdgeList
   vecS, // VertexList
   bidirectionalS, // Directed
   no_property, // VertexProperties
-  property<edge_weight_t, edge_weight_property_t>, // EdgeProperties
+  no_property, // EdgeProperties
   no_property, // GraphProperties
   listS // EdgeList
 >Graph;
@@ -60,6 +58,7 @@ typedef std::pair<int,int> E;
 *
 */
 class storage {
+// methods
 public:
   /*
   * 输入：void
@@ -69,12 +68,13 @@ public:
   */
   static storage* getInstance();
 
+  void read();
   /*
   * 输入：void
   * 输出：void
   * 说明：把家谱当前状态写入文件
   */
-  void sync();
+  void sync()const;
 
   /*
   * 输入：已存在的Person或id
@@ -83,7 +83,7 @@ public:
   *       当需要查询的id不存在时，返回一个默认构造的Person
   */
   id_type getId(const Person& person);
-  Person& getPersonById(id_type id) const;
+  const Person& getPersonById(id_type id) const;
 
   /*
   * 输入：已存在的Person或id
@@ -146,13 +146,23 @@ public:
   * 说明：把家谱按照特定的格式输出
   */
   void display() const;
+
+  /*
+  * 输入：person
+  * 输出：void
+  * 说明：apply for a new id, add the person to map
+  */
+  void addPerson(const Person);
 private:
-// singleton
+  // singleton
   storage();
+  id_type getNewId()const;
+// data members
+private:
   static storage* instance;
   // the following two things involves file operation
-  map<id_type, Person&> idMap;
   Graph g;
+  map<id_type,const Person> idMap;
 
   /*
   * 输入：void
@@ -160,7 +170,8 @@ private:
   * 说明：每次把新的Person插入家谱时，需要往idMap里插入一个(id, Person)对，
   *       该函数用来生成一个未被使用的id号
   */
-  id_type getNewId();
+  bool dirty;
+  // id_type max_id;
 };
 // singleton
 storage* storage::instance=nullptr;

@@ -5,5 +5,7 @@
 using namespace std;
 
 int main() {
-	Person p{MALE,123};
+	Person p1{MALE,123};
+	Person p2{};
+	Person p3{FEMALE};
 }
