@@ -29,6 +29,7 @@ using namespace boost;
 */
 typedef int id_type;
 const id_type UNDEFINE_ID = INT_MAX;
+
 typedef int edge_weight_property_t;
 typedef adjacency_list<
   vecS, // OutEdgeList

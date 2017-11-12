@@ -81,7 +81,8 @@ We focus on editing methods.
 
 0. Output to graphviz with color (weight)
 0. Add person (Parameter PAck)
-0. 
+0. ...
+0. Optimize -O3 on final release
 
 
 
