@@ -43,6 +43,7 @@ using boost::graph_traits;
 * Focus color
 * Add relationship ("birth()"?) (Parameter Pack ?)
 * Optimize -O3 on final release
+* In g++ command, put -lxx after .o files
 
 # Done
 
