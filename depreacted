@@ -86,16 +86,46 @@ vector<id_type> getChild(id_type id) const;
 */
 bool addRoot(const Person& grandFather);
 
+	// const map<int,string> command{
+	// 	{0,          ""},
+	// 	{1,      "init"},
+	// 	{2,"new_person"},
+	// 	{3,     "birth"},
+	// 	{4,       "die"}
+	// }
+	// de-facto initialized storage instance (before reading file)
 
 
 
+		if(strcmp(argv[1],"new_person")==0){
+			cout<<"Enter name, gender, "<<endl;
+			exit(0);
+		}
 
 
+// void storage::init(){
+// 	Graph h;
+// 	g=h;
+// 	sync();
+// }
+
+id_type  storage::getNewId()const{
+	if(idMap.empty())
+		return 0;
+	return idMap.rbegin()->first+1;
+}
+void storage::addPerson(const Person p){
+	// idMap[getNewId()]=p;
+	idMap.emplace(getNewId(),p);
+}
+
+#define NO_MOTHER -1
+// #define RELATIONSHIP_FILENAME "relationship.csv"
+
+boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::detail::graph::mutate_graph*)'
 
 
-
-
-
+boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::detail::graph::mutate_graph*)
 
 
 

@@ -7,19 +7,17 @@ using namespace std;
 * 对错误或未定义的Person，name属性为空字符串
 */
 struct Person{
-public:
   // a person's birthday and gender cannot be changed
   // Person()=delete;
   // Person(string name, Date birthday, Gender gender) : name(name), birthday(birthday), gender(gender) {}
   // Person
-public:
+  
   /*
   * 对错误或未定义的Date，所有时间都定为0
   */
+  // 1(id)+8(attr)=9(cols in csv)
   const string name;
-  const Gender gender;
-
-  const id_type mother;
+  const string gender;
 
   const date_t birth_year;
   const date_t birth_month;

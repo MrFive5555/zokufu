@@ -48,8 +48,6 @@ We focus on editing methods.
 
 ###### Requirements-人
 
->C标准time.h里面提供的time struct参考一波
-
 ###### Rules
 
 * A male decendent can have multiple wives

@@ -1,22 +1,10 @@
-// dir.cpp
-/*
-This file is a demo of the following things
-	1) How to get current directory
-	2) How to refer to a file relative to the path of the executable, ignoring the "current directory"
-	3) (Dumb) cross-platform programming with #ifdef (#if defined)
-Thanks to:
-	http://www.codebind.com/cpp-tutorial/c-get-current-directory-linuxwindows/
-	https://sourceforge.net/p/predef/wiki/OperatingSystems/
-	https://stackoverflow.com/questions/4025370/can-an-executable-discover-its-own-path-linux
-	https://stackoverflow.com/questions/143174/how-do-i-get-the-directory-that-a-program-is-running-from
-Boost may simplify it (tl;dr)
-  http://www.boost.org/doc/libs/1_65_1/libs/filesystem/doc/index.htm
-*/
+// util.cpp
 // non os-specific headers
 #include<cstdio>
 #include<iostream>
 #include<string>
 #include<fstream>
+#include<cstdlib>
 // os-specific things
 #if defined( _WIN32 ) || defined ( _WIN64 )
 // >>> Windows
@@ -61,3 +49,24 @@ string execDir(){
   // cout<<str<<endl;
   return path+APPEND;
 }
+
+
+
+
+#if defined( _WIN32 ) || defined ( _WIN64 )
+// >>> Windows
+#error "display_dot() unimplementated for windows"
+// <<< Windows
+#elif defined( __linux__ ) || defined ( __gnu_linux__ )
+// >>> Linux
+void display_dot(const string dotfile){
+  // string noext(dotfile);
+  // while(noext.back()!='.')
+    // noext.pop_back();
+  system((string()+"dot -Tsvg -O "+dotfile).c_str());
+  system((string()+"xdg-open "+dotfile+".svg").c_str());
+}
+// <<< Linux
+#else
+  #error "Unsupported OS"
+#endif

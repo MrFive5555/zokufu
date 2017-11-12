@@ -29,7 +29,6 @@ using namespace boost;
 * I have to change this type name ( "id_t" -> "id_type" )
 */
 
-
 class storage {
 // methods
 public:
@@ -53,7 +52,7 @@ public:
   * 输出：void
   * 说明：把家谱当前状态写入文件
   */
-  void sync()const;
+  void sync();
 
   /*
   * 输入：fatherId：父亲的id
@@ -76,7 +75,7 @@ public:
   * 输出：若输入的Person存在，返回true；若不存在，返回false
   * 说明：把输入的Person设置成树的根
   */
-  void traverse(function<void(const id_type id)>exec);
+  // void traverse(function<void(const id_type id)>exec);
 
   /*
   * 输入：void
@@ -100,7 +99,8 @@ private:
 private:
   static storage* instance;
   // the following two things involves file operation
-  Graph g;
+  Digraph hierarchy;
+  Ugraph mate;
   map<id_type,const Person> idMap;
 
   /*
@@ -109,7 +109,7 @@ private:
   * 说明：每次把新的Person插入家谱时，需要往idMap里插入一个(id, Person)对，
   *       该函数用来生成一个未被使用的id号
   */
-  bool dirty;
+  // bool dirty;
   // id_type max_id;
 };
 #endif // !GENEALOGY_H_
