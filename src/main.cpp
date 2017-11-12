@@ -12,8 +12,8 @@ void complain(){
 }
 bool file_both_exist(){
 	return(
-		ifstream(execDir()+MATE_RELATIONSHIP_FILENAME)&&
-		ifstream(execDir()+HIERARCHY_RELATIONSHIP_FILENAME)&&
+		ifstream(execDir()+MATE_FILENAME)&&
+		ifstream(execDir()+TREE_FILENAME)&&
 		ifstream(execDir()+PERSON_FILNAME)
 	);
 }
@@ -43,6 +43,7 @@ int main(int argc, char** argv) {
 		}
 		if(COMMAND("init")){
 			sure("Are you sure to delete everyone and initialize?");
+			s->init();
 			s->sync();
 			exit(0);
 		}

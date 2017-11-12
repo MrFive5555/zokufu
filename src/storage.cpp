@@ -20,7 +20,7 @@ storage* storage::getInstance(){
 }
 
 // new, init, read
-storage::storage():hierarchy(),mate(),idMap(){}
+storage::storage():tree(),mate(),idMap(){}
 void storage::load(){
 	/*
 	* read person file to idMap (immutable)
@@ -47,10 +47,10 @@ void storage::load(){
 		Person p{name,gender,birth_year,birth_month,birth_day,death_year,death_month,death_day};
 		idMap.emplace(id,p);
 	}
-	ifstream h(HIERARCHY_RELATIONSHIP_FILENAME);
-	ifstream m(MATE_RELATIONSHIP_FILENAME);
+	ifstream h(TREE_FILENAME);
+	ifstream m(MATE_FILENAME);
 	dynamic_properties dp(ignore_other_properties);
-  read_graphviz(h,hierarchy,dp);
+  read_graphviz(h,tree,dp);
   read_graphviz(m,mate,dp);
   h.close();
   m.close();
@@ -59,60 +59,63 @@ void storage::load(){
 // write
 void storage::sync(){
 	/*
-	* 	write mate, hierarchy to corresponding files
+	* 	write mate, tree to corresponding files
 	*/
-	ofstream h(HIERARCHY_RELATIONSHIP_FILENAME);
-	ofstream m(MATE_RELATIONSHIP_FILENAME);
+	ofstream m(MATE_FILENAME);
+	ofstream t(TREE_FILENAME);
+	ofstream r(RAIN_FILENAME);
 	// cout<<"syncing"<<endl;
-	// add_edge(0,5,hierarchy);
-	// ofstream h("hierarchy.dot");
-  write_graphviz(h,hierarchy);
+	// add_edge(0,5,tree);
+	// ofstream h("tree.dot");
   write_graphviz(m,mate);
-  h.close();
+  write_graphviz(t,tree);
+  write_graphviz(r,rain);
   m.close();
+  t.close();
+  r.close();
 }
-void storage::mate_might_birth(const vector<id_type> v){
-	// check incest
+void storage::init(){
+	add_edge(0,1,tree);
+}
+void storage::mate_might_birth(vector<id_type> v){
 	// add mate
-	// add hierarchy
-	// check size
+	// add tree
 
+	// root is infertile
+	if(v[0]==0||v[1]==0)
+		throw runtime_error("root can't have children");
+	// size
 	if(v.size()<2)
 		throw runtime_error(">=2 people needed");
+	// exist
+	for(auto r:v){
+		if(idMap.find(r)==idMap.end())
+			throw runtime_error(string()+"person with id "+to_string(r)+" doesn't exist");
+	}
+	// switch, father goes first
+	if(idMap.at(v[0]).gender==FEMALE)
+		std::swap(v[0],v[1]);
+	const id_type father=v[0];
+	const id_type mother=v[1];
 	// check gender
-	auto gpair=std::tie(idMap.at(v[0]).gender,idMap.at(v[1]).gender);
-	if(gpair!=make_tuple(FEMALE,MALE)&&gpair!=make_tuple(MALE,FEMALE))
+	if(std::tie(idMap.at(father).gender,idMap.at(mother).gender)!=make_tuple(MALE,FEMALE))
 		throw runtime_error("No homosexuality please");
-	add_edge(v[0],v[1],mate);
+	// incest
+	if(in_degree(father,tree)>0&&in_degree(mother,tree)>0)
+		throw runtime_error("No incest!");
+	// add mate
+	add_edge(father,mother,mate);
 	for(size_t i=2;i!=v.size();++i){
 		// check claimed child
-		if(num_vertices(hierarchy)>v[i] && in_degree(v[i],hierarchy)>0)
+		if(num_vertices(tree)>v[i] && in_degree(v[i],tree)>0)
 			throw runtime_error(string()+"The child with id "+to_string(i)+" already has parent(s)");
-		add_edge(v[0],v[i],hierarchy);
-		add_edge(v[1],v[i],hierarchy);
+		add_edge(father,v[i],tree);
+		add_edge(mother,v[i],rain);
 	}
-
 }
-// id_t storage::getId(const Person& person);
-// const Person& storage::getPersonById(id_type id) const{
-// 	if(idMap.find(id)==idMap.end())
-// 		throw runtime_error("This id does not refer to any person. A.K.A the person doesn't exist");
-// 	return idMap.at(id);
-// }
-// Person& storage::father(id_t id) const;
-// Person& storage::monther(id_t id) const;
-// id_t storage::getFather(id_t id) const;
-// id_t storage::getMonther(id_t id) const;
-// vector<id_t> storage::getBrother(id_t id) const;
-// vector<id_t> storage::getWife(id_t id) const;
-// vector<id_t> storage::getChild(id_t id) const;
-// bool storage::addRoot(const Person& grandFather);
-// bool storage::addChild(id_t fatherId, id_t motherId, id_t childId);
-// bool storage::removeChild(id_t id);
-// void storage::traverse(function<void(const id_t id)>exec);
 void storage::display() const{
-  display_dot(HIERARCHY_RELATIONSHIP_FILENAME);
-  display_dot(MATE_RELATIONSHIP_FILENAME);
+  display_dot(TREE_FILENAME);
+  display_dot(MATE_FILENAME);
 }
 
 

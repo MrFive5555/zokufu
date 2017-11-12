@@ -4,7 +4,7 @@
 
 * claimed kid check
 * incest check
-* 
+* auto swtich dad mom in mating
 
 ## Timeline
 

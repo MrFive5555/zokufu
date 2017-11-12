@@ -50,7 +50,7 @@ public:
   * 
   * 
   */
-  void mate_might_birth(const vector<id_type>);
+  void mate_might_birth(vector<id_type>);
   // void mate_might_birth();
 
   /*
@@ -80,7 +80,7 @@ public:
   * 说明：apply for a new id, add the person to map
   */
   void addPerson(const Person);
-  // void init();
+  void init();
 private:
   // singleton
   storage();
@@ -89,8 +89,9 @@ private:
 private:
   static storage* instance;
   // the following two things involves file operation
-  Digraph hierarchy;
   Ugraph mate;
+  Digraph tree;
+  Digraph rain;
   map<id_type,const Person> idMap;
 
   /*

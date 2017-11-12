@@ -51,5 +51,6 @@ using boost::graph_traits;
 * Output to graphviz
 * In g++ command, put -lxx after .o files
 * read graphviz
+* 3 graphs
 
 

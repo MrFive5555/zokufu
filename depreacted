@@ -146,6 +146,29 @@ boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::ch
 # 	$(CC) $^ $(F_LINK) -o $@
 
 
+// id_t storage::getId(const Person& person);
+// const Person& storage::getPersonById(id_type id) const{
+// 	if(idMap.find(id)==idMap.end())
+// 		throw runtime_error("This id does not refer to any person. A.K.A the person doesn't exist");
+// 	return idMap.at(id);
+// }
+// Person& storage::father(id_t id) const;
+// Person& storage::monther(id_t id) const;
+// id_t storage::getFather(id_t id) const;
+// id_t storage::getMonther(id_t id) const;
+// vector<id_t> storage::getBrother(id_t id) const;
+// vector<id_t> storage::getWife(id_t id) const;
+// vector<id_t> storage::getChild(id_t id) const;
+// bool storage::addRoot(const Person& grandFather);
+// bool storage::addChild(id_t fatherId, id_t motherId, id_t childId);
+// bool storage::removeChild(id_t id);
+// void storage::traverse(function<void(const id_t id)>exec);
+
+	// auto gpair=std::tie(idMap.at(v[0]).gender,idMap.at(v[1]).gender);
+	// if(gpair!=make_tuple(FEMALE,MALE)&&gpair!=make_tuple(MALE,FEMALE))
+	// 	throw runtime_error("No homosexuality please");
+	// check incest
+	// if
 
 
 

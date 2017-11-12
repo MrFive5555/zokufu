@@ -25,8 +25,9 @@
 using namespace std;
 using namespace boost;
 
-#define MATE_RELATIONSHIP_FILENAME execDir()+"mate.dot"
-#define HIERARCHY_RELATIONSHIP_FILENAME execDir()+"hierarchy.dot"
+#define MATE_FILENAME execDir()+"mate.dot"
+#define TREE_FILENAME execDir()+"tree.dot"
+#define RAIN_FILENAME execDir()+"rain.dot"
 #define PERSON_FILNAME execDir()+"person.csv"
 #define MALE string("male")
 #define FEMALE string("female")
@@ -58,7 +59,7 @@ typedef graph_traits<Ugraph>::vertex_descriptor Vertex_u;
 typedef std::pair<int,int> E;
 typedef unsigned long date_t;
 // "unsigned" conflict with "NO_MOTHER"
-typedef long id_type;
+typedef unsigned long id_type;
 
 // enum Gender {MALE,FEMALE};
 
