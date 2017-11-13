@@ -470,3 +470,8 @@ v1,v2
       cout<<"from "<<source(e,tree)<<" to "<<target(e,tree)<<endl;
     }
 
+
+    // // os<<"[shape=\"diamond\"]";
+    // // os<<"[style=\"invis\"]";
+    // // os<<"[label=\"degree="<<degree(0,g)<<"\"]";
+    // os<<"[label=\"in degree="<<in_degree(x,g)<<"\"]";

@@ -12,6 +12,7 @@
 #define MATE_PRINT "dot/mate.dot"
 #define TREE_PRINT "dot/tree.dot"
 #define RAIN_PRINT "dot/rain.dot"
+#define NTR_PRINT "dot/ntr.dot"
 #define MALE string("male")
 #define FEMALE string("female")
 #define ROOT 0

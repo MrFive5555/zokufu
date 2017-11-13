@@ -19,6 +19,7 @@ using boost::graph_traits;
 	* maybe some csv op commmands
 * time.h time struct
 * Focus color
+* Add relationship ("birth()"?) (Parameter Pack ?)
 * 5-bit-wide bitset, user deceide whether to label name/id/..., color gender/...
 
 | No. | related attr | whether or not do ... |
@@ -41,21 +42,19 @@ default "11100"
 * graph classes
 	* adjacency list
 * tutorial
-* Add relationship ("birth()"?) (Parameter Pack ?)
 
 ###### Read later
 
 * quick tour
 	* color
 	* visitor
-* graph i/o
-	* read_graphviz
-	* write_graphviz
 
 # Todo
 
 * Optimize -O3 on final release
-* sync() writes PERSON_FILENAME(person.csv)?
+* sync() writes PERSON_FILENAME(person.csv)?\
+* incest check
+* combined rain+tree, highlight our fellow (seperate cheat engine mark fellow)
 
 # Done
 
@@ -68,5 +67,8 @@ default "11100"
 * create a folder for csv/dot data storage, seperate from display(d)
 * display test.sh result after stripping chromium warnings
 * stable test ("xxxx"?)
+* graph i/o
+	* read_graphviz
+	* write_graphviz
 
 

@@ -65,7 +65,10 @@ void Storage::init(){
 	add_vertex(tree);
 }
 namespace tmp{
+// gvars
 const idmap_t* theft=nullptr;
+set<id_type> fellow;
+// writer class templates
 template<class G>
 class undefault_writer {
 public:
@@ -76,10 +79,6 @@ public:
   template <class VorE>
   void operator()(std::ostream& os, const VorE& x) const {
   	personExist(x,theft);
-    // // os<<"[shape=\"diamond\"]";
-    // // os<<"[style=\"invis\"]";
-    // // os<<"[label=\"degree="<<degree(0,g)<<"\"]";
-    // os<<"[label=\"in degree="<<in_degree(x,g)<<"\"]";
   	os<<"["
   		<<"label="
   			<<"\""
@@ -99,31 +98,82 @@ public:
 private:
   const G& g;
 };
+template<class G>
+class another_writer {
+public:
+  another_writer()=delete;
+  another_writer(G& g_):g(g_){}
+  void operator()(std::ostream&) const {
+  }
+  template <class VorE>
+  void operator()(std::ostream& os, const VorE& x) const {
+  	personExist(x,theft);
+  	os<<"["
+	  		<<"label="
+	  			<<"\""
+	  				<<x
+	  				<<" "
+	  				<<theft->at(x).name
+	  			<<"\""
+	  		<<","
+	  		<<"style="<<(degree(x,g)==0?"invis":(fellow.find(x)==fellow.end()?"dashed":"solid"))
+  		<<"]";
+
+  }
+private:
+  const G& g;
+};
 } // end namespace tmp
 void display_dot(const string dotfile){
   string noext(dotfile);
   while(noext.back()!='.')
     noext.pop_back();
   system((string()+"dot -Tsvg -O "+dotfile).c_str());
-  sleep(1);
+  // sleep(1);
   system((string()+"chromium-browser "+dotfile+".svg").c_str());
-  sleep(1);
+  // sleep(1);
 }
 void Storage::display()const{
 	// write graphviz-dot with customized label writer
 	// compile graphviz-dot to svg
 	// invoke chromium-browser to reander svg
-
-
 	tmp::theft=&idMap;
-	ofstream ofsS[]={ofstream(MATE_PRINT),ofstream(TREE_PRINT),ofstream(RAIN_PRINT)};
+	ofstream ofsS[]={
+		ofstream(MATE_PRINT),
+		ofstream(TREE_PRINT),
+		ofstream(RAIN_PRINT),
+		ofstream(NTR_PRINT)
+	};
 	cout<<"Writing dot files..."<<endl;
 	write_graphviz(ofsS[0],mate,tmp::undefault_writer<const Ugraph&>(mate));
 	write_graphviz(ofsS[1],tree,tmp::undefault_writer<const Digraph&>(tree));
 	write_graphviz(ofsS[2],rain,tmp::undefault_writer<const Digraph&>(rain));
+
+	Digraph ntr;
+	// const std::pair<EI, EI> itp=edges(g);
+	// for_each(itp.first,itp.second,[&](const E e){
+	// 	cout<<source(e,g)<<" -> "<<target(e,g)<<endl;
+	// });
+	typedef typename graph_traits<Digraph>::edge_iterator EI;
+	typedef typename graph_traits<Digraph>::edge_descriptor E;
+	const pair<EI,EI> itp=edges(tree);
+	for_each(itp.first,itp.second,[&](const E e){
+		const auto s=source(e,tree);
+		const auto t=target(e,tree);
+		add_edge(s,t,ntr);
+		tmp::fellow.insert(s);
+		tmp::fellow.insert(t);
+	});
+	const auto jtp=edges(rain);
+	for_each(jtp.first,jtp.second,[&](const E e){
+		const auto s=source(e,rain);
+		const auto t=target(e,rain);
+		add_edge(s,t,ntr);
+	});
+	write_graphviz(ofsS[3],ntr,tmp::another_writer<const Digraph&>(ntr));
 	for(auto& r:ofsS)
 		r.close();
-	for(auto i:{MATE_PRINT,TREE_PRINT,RAIN_PRINT})
+	for(auto i:{MATE_PRINT,TREE_PRINT,RAIN_PRINT,NTR_PRINT})
 		display_dot(i);
 }
 void Storage::attach_to_root(id_type r){
