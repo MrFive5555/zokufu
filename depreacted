@@ -201,6 +201,57 @@ boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::ch
 	if(make_tuple(degree(r,mate),degree(r,tree),degree(r,rain))!=make_tuple(0,0,0))
 
 
+int main() {
+	Digraph dg;
+	add_edge(0,3,dg);
+	// for(unsigned i:{1,2})
+	// 	remove_vertex(i,dg);
+
+
+  // for (;vp.first != vp.second; ++vp.first){
+  //   std::cout << *vp.first << "=" << index[*vp.first] <<  ", ";
+  // }
+
+	typedef property_map<Digraph, vertex_index_t>::type IndexMap;
+	IndexMap index=get(vertex_index,dg);
+
+	graph_traits<Digraph>::vertex_iterator vi, vi_end, next;
+	tie(vi, vi_end) = vertices(dg);
+	for (next = vi; vi != vi_end; vi = next) {
+		++next;
+		if(index[*vi]==1){
+			remove_vertex(*vi,dg);
+			break;
+		}
+	}
+
+	write_graphviz(cout,dg);
 
 
 
+	return 0;
+}
+
+  // first parameter: me
+  // second parameter:my father or father whoever is part of the family
+  // thrid parameter: mate of the second parameter (not part of the family)
+  void join_parent(id_type,id_type,id_type);
+
+
+
+
+
+	# test attach person with wife
+	# 
+	# test attach person with subspring
+	# 
+  // write_graphviz(ofsS[1],tree,default_writer(),my_vertex_writer(tree));
+  // const char* name[] = { "dax.h", "yow.h", "boz.h", "zow.h", "foo.cpp",
+  //                      "foo.o", "bar.cpp", "bar.o", "libfoobar.a",
+  //                      "zig.cpp", "zig.o", "zag.cpp", "zag.o",
+  //                      "libzigzag.a", "killerapp" };
+  // write_graphviz(ofsS[1],tree,default_writer(),make_label_writer(name));
+  // write_graphviz(ofsS[1],tree,default_writer(),make_label_writer(name));
+  // write_graphviz(ofsS[2],rain);
+
+  // person?

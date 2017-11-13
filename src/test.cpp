@@ -1,33 +1,67 @@
 #include"main.h"
 using namespace std;
 
-int main() {
-	Digraph dg;
-	add_edge(0,3,dg);
-	// for(unsigned i:{1,2})
-	// 	remove_vertex(i,dg);
 
+#include <boost/graph/graphviz.hpp>
 
-  // for (;vp.first != vp.second; ++vp.first){
-  //   std::cout << *vp.first << "=" << index[*vp.first] <<  ", ";
-  // }
+enum files_e { dax_h, yow_h, boz_h, zow_h, foo_cpp,
+               foo_o, bar_cpp, bar_o, libfoobar_a,
+               zig_cpp, zig_o, zag_cpp, zag_o,
+                 libzigzag_a, killerapp, N };
+const char* name[] = { "dax.h", "yow.h", "boz.h", "zow.h", "foo.cpp",
+                       "foo.o", "bar.cpp", "bar.o", "libfoobar.a",
+                       "zig.cpp", "zig.o", "zag.cpp", "zag.o",
+                       "libzigzag.a", "killerapp" };
 
-	typedef property_map<Digraph, vertex_index_t>::type IndexMap;
-	IndexMap index=get(vertex_index,dg);
+  template <class Name>
+  class label_writer {
+  public:
+    label_writer(Name _name) : name(_name) {}
+    template <class VertexOrEdge>
+    void operator()(std::ostream& out, const VertexOrEdge& v) const {
+      // out << "[label=" << escape_dot_string(get(name, v)) << "]";
+      out << "[label=" << "\"blahblah\"" << "]";
+    }
+  private:
+    Name name;
+  };
+  template <class Name>
+  inline label_writer<Name>
+  make_label_writer(Name n) {
+    return label_writer<Name>(n);
+  }
 
-	graph_traits<Digraph>::vertex_iterator vi, vi_end, next;
-	tie(vi, vi_end) = vertices(dg);
-	for (next = vi; vi != vi_end; vi = next) {
-		++next;
-		if(index[*vi]==1){
-			remove_vertex(*vi,dg);
-			break;
-		}
-	}
+int main(int,char*[])
+{
 
-	write_graphviz(cout,dg);
+  typedef pair<int,int> Edge;
+  Edge used_by[] = {
+    Edge(dax_h, foo_cpp), Edge(dax_h, bar_cpp), Edge(dax_h, yow_h),
+    Edge(yow_h, bar_cpp), Edge(yow_h, zag_cpp),
+    Edge(boz_h, bar_cpp), Edge(boz_h, zig_cpp), Edge(boz_h, zag_cpp),
+    Edge(zow_h, foo_cpp),
+    Edge(foo_cpp, foo_o),
+    Edge(foo_o, libfoobar_a),
+    Edge(bar_cpp, bar_o),
+    Edge(bar_o, libfoobar_a),
+    Edge(libfoobar_a, libzigzag_a),
+    Edge(zig_cpp, zig_o),
+    Edge(zig_o, libzigzag_a),
+    Edge(zag_cpp, zag_o),
+    Edge(zag_o, libzigzag_a),
+    Edge(libzigzag_a, killerapp)
+  };
+  const int nedges = sizeof(used_by)/sizeof(Edge);
+  int weights[nedges];
+  std::fill(weights, weights + nedges, 1);
 
+  using namespace boost;
 
+  typedef adjacency_list< vecS, vecS, directedS,
+      property< vertex_color_t, default_color_type >,
+      property< edge_weight_t, int >
+    > Graph;
+  Graph g(used_by, used_by + nedges, weights, N);
 
-	return 0;
+  write_graphviz(std::cout, g, label_writer(name));
 }

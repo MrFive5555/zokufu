@@ -34,11 +34,8 @@ void storage::display() const{
 }
 void storage::attach_to_root(id_type r){
 	personExist(r);
-	// if(
-	// 	(vertex_exist(mate,r)&&degree(r,mate)!=0) ||
-	// 	(vertex_exist(tree,r)&&degree(r,mate)!=0) ||
-	// 	(vertex_exist(rain,r)&&degree(r,mate)!=0)
-	// )
+	if(out_degree(ROOT,tree)!=0)
+		throw runtime_error("Root cannot have 2 subsprings");
 	if(exist_and_non_naked(r,mate)||exist_and_non_naked(r,tree)||exist_and_non_naked(r,rain))
 		throw runtime_error("You can only attach a bachelor(no wife no son) to root");
 	add_edge(ROOT,r,tree);
@@ -58,7 +55,7 @@ void storage::mate_might_birth(const vector<id_type> v){
 	const id_type slave=v[1];
 	if(!vertex_exist(master,tree)||in_degree(master,tree)<=0)
 		throw runtime_error("The first person with isn't part of the family.");
-	if(vertex_exist(slave,tree)||in_degree(slave,tree)>0)
+	if(vertex_exist(slave,tree)&&in_degree(slave,tree)>0)
 		throw runtime_error("Second person is already in the family, incest forbidden");
 	// add mate
 	add_edge(master,slave,mate);
@@ -106,6 +103,21 @@ void storage::load(){
   	r.close();
 }
 
+// template <class Name>
+template <typename Graph>
+class my_vertex_writer {
+public:
+  my_vertex_writer(Graph& g) : g_(g) {}
+
+  template <typename Vertex>
+  void operator()(std::ostream& out, const Vertex& v) const {
+       // pseudo-code!
+       if (0 == boost::size(in_edges(v, g_)))
+          out << "[style=\"invis\"]";
+  }
+private:
+  Graph& g_;
+};
 // write
 void storage::sync(){
 	/*
@@ -118,7 +130,6 @@ void storage::sync(){
   write_graphviz(ofsS[2],rain);
   for(auto& r:ofsS)
   	r.close();
-  // person?
 }
 void storage::personExist(id_type r)const{
 	if(idMap.find(r)==idMap.end())

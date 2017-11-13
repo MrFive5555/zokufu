@@ -27,10 +27,6 @@ public:
   // a new member which is directly(temporarily) attached to root
   // divide_and_conqueror, combine later
   void attach_to_root(id_type id);
-  // first parameter: me
-  // second parameter:my father or father whoever is part of the family
-  // thrid parameter: mate of the second parameter (not part of the family)
-  void join_parent(id_type,id_type,id_type);
   void mate_might_birth(vector<id_type>);
 // non-interface
   void load();
