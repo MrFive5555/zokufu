@@ -2,13 +2,13 @@ digraph G {
 0[label="0 root 1",color=red,style=solid];
 1[label="1 金英淑 0",color=red,style=invis];
 2[label="2 金日成 4",color=blue,style=solid];
-3[label="3 金正日 5",color=blue,style=solid];
+3[label="3 金正日 6",color=blue,style=solid];
 4[label="4 高英姫 0",color=red,style=invis];
 5[label="5 金正恩 1",color=blue,style=solid];
 6[label="6 李雪主 1",color=red,style=solid];
 7[label="7 金主爱 0",color=red,style=invis];
 8[label="8 成蕙琳 0",color=red,style=invis];
-9[label="9 金正男 0",color=blue,style=invis];
+9[label="9 金正男 1",color=blue,style=solid];
 10[label="10 金敬姬 1",color=red,style=solid];
 11[label="11 张成泽 1",color=blue,style=solid];
 12[label="12 金雪松 0",color=red,style=invis];
@@ -22,4 +22,5 @@ digraph G {
 3->5 ;
 3->6 ;
 3->14 ;
+3->9 ;
 }
