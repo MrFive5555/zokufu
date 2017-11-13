@@ -1,5 +1,5 @@
 # CC=g++ -std=c++11 -Wall -fdiagnostics-color=always
-CC=g++ -std=c++11 -Wall -g
+CC=g++ -std=c++11 -Wall -g -O0
 D_BIULD=build
 D_INCLUDE=include
 D_SRC=src

@@ -6,6 +6,16 @@ using namespace std;
 using namespace boost;
 using namespace io; // extract names from csv.h
 
+template<typename g_t>
+bool vertex_exist(id_type id,g_t g){
+	return num_vertices(g)>id;
+}
+
+template<typename g_t>
+bool exist_and_non_naked(id_type id,g_t g){
+	return vertex_exist(id,g)&&degree(id,g)>0;
+}
+
 // singleton jibberjabber
 storage* storage::instance=nullptr;
 storage* storage::getInstance(){
@@ -19,41 +29,43 @@ void storage::init(){
 	add_vertex(tree);
 }
 void storage::display() const{
-	// const char* arr[]={MATE_FILENAME,TREE_FILENAME,RAIN_FILENAME}
 	for(auto& r:{MATE_FILENAME,TREE_FILENAME,RAIN_FILENAME})
 		display_dot(r);
-  // display_dot(MATE_FILENAME);
-  // display_dot(TREE_FILENAME);
-  // display_dot(RAIN_FILENAME);
 }
 void storage::attach_to_root(id_type r){
 	personExist(r);
-	if(make_tuple(degree(r,mate),degree(r,tree),degree(r,rain))!=make_tuple(0,0,0))
+	// if(
+	// 	(vertex_exist(mate,r)&&degree(r,mate)!=0) ||
+	// 	(vertex_exist(tree,r)&&degree(r,mate)!=0) ||
+	// 	(vertex_exist(rain,r)&&degree(r,mate)!=0)
+	// )
+	if(exist_and_non_naked(r,mate)||exist_and_non_naked(r,tree)||exist_and_non_naked(r,rain))
 		throw runtime_error("You can only attach a bachelor(no wife no son) to root");
 	add_edge(ROOT,r,tree);
 }
 void storage::mate_might_birth(const vector<id_type> v){
-	// root is infertile
-	if(v[0]==0||v[1]==0)
-		throw runtime_error("root can't have children");
 	// size
 	if(v.size()<2)
 		throw runtime_error(">=2 people needed");
+	// root is infertile
+	if(v[0]==0||v[1]==0)
+		throw runtime_error("root can't have children");
 	// exist
 	for(auto r:v){
 		personExist(r);
 	}
 	const id_type master=v[0];
 	const id_type slave=v[1];
-	if(in_degree(master,tree)<=0)
+	if(!vertex_exist(master,tree)||in_degree(master,tree)<=0)
 		throw runtime_error("The first person with isn't part of the family.");
-	if(in_degree(slave,tree)>0)
+	if(vertex_exist(slave,tree)||in_degree(slave,tree)>0)
 		throw runtime_error("Second person is already in the family, incest forbidden");
 	// add mate
 	add_edge(master,slave,mate);
 	for(size_t i=2;i!=v.size();++i){
 		// check claimed child
-		if(num_vertices(tree)>v[i] && in_degree(v[i],tree)>0)
+		// if(num_vertices(tree)>v[i] && in_degree(v[i],tree)>0)
+		if(vertex_exist(v[i],tree) && in_degree(v[i],tree)>0)
 			throw runtime_error(string()+"The child with id "+to_string(i)+" already has parent(s)");
 		add_edge(master,v[i],tree);
 		add_edge(slave,v[i],rain);
@@ -99,6 +111,7 @@ void storage::sync(){
 	/*
 	* 	write mate, tree to corresponding files
 	*/
+	// add_edge(0,1,tree);
 	ofstream ofsS[]{ofstream(MATE_FILENAME), ofstream(TREE_FILENAME), ofstream(RAIN_FILENAME)};
   write_graphviz(ofsS[0],mate);
   write_graphviz(ofsS[1],tree);

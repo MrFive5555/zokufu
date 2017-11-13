@@ -194,6 +194,11 @@ boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::ch
 	// incest
 
 
+  // display_dot(MATE_FILENAME);
+  // display_dot(TREE_FILENAME);
+  // display_dot(RAIN_FILENAME);
+  
+	if(make_tuple(degree(r,mate),degree(r,tree),degree(r,rain))!=make_tuple(0,0,0))
 
 
 

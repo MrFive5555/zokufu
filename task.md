@@ -45,6 +45,7 @@ using boost::graph_traits;
 * Optimize -O3 on final release
 * sh build boost_graph boost_regex
 * sync() writes PERSON_FILENAME ?
+* display test.sh result after stripping chromium warnings
 
 # Done
 
