@@ -193,6 +193,9 @@ Error: The first person with isn't part of the family.
 [...]
 
 ```
+程序会自动生成以下四个svg矢量图:  
+第四个图只是整合了一下,本身是拼凑出来的
+
 ![mate](mate.dot.svg)
 ![tree](tree.dot.svg)
 ![rain](rain.dot.svg)
