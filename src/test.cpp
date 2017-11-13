@@ -1,67 +1,27 @@
 #include"main.h"
-using namespace std;
+int main(){
+  Digraph g;
+  dynamic_properties dp;
+  cout<<TREE_FILENAME<<endl;
+  ifstream ifs(TREE_FILENAME);
+  // read_graphviz(ifs,g);
+  string gs="asdfasdf";
+  read_graphviz(gs,g);
+  ifs.close();
+
+  // ofstream ofs("dat/tree_rewrite.dot");
+  // write_graphviz(ofs,g);
+  write_graphviz(cout,g);
+
+  // read_graphviz(ifstream(TREE_FILENAME),g,dp);
 
 
-#include <boost/graph/graphviz.hpp>
-
-enum files_e { dax_h, yow_h, boz_h, zow_h, foo_cpp,
-               foo_o, bar_cpp, bar_o, libfoobar_a,
-               zig_cpp, zig_o, zag_cpp, zag_o,
-                 libzigzag_a, killerapp, N };
-const char* name[] = { "dax.h", "yow.h", "boz.h", "zow.h", "foo.cpp",
-                       "foo.o", "bar.cpp", "bar.o", "libfoobar.a",
-                       "zig.cpp", "zig.o", "zag.cpp", "zag.o",
-                       "libzigzag.a", "killerapp" };
-
-  template <class Name>
-  class label_writer {
-  public:
-    label_writer(Name _name) : name(_name) {}
-    template <class VertexOrEdge>
-    void operator()(std::ostream& out, const VertexOrEdge& v) const {
-      // out << "[label=" << escape_dot_string(get(name, v)) << "]";
-      out << "[label=" << "\"blahblah\"" << "]";
-    }
-  private:
-    Name name;
-  };
-  template <class Name>
-  inline label_writer<Name>
-  make_label_writer(Name n) {
-    return label_writer<Name>(n);
-  }
-
-int main(int,char*[])
-{
-
-  typedef pair<int,int> Edge;
-  Edge used_by[] = {
-    Edge(dax_h, foo_cpp), Edge(dax_h, bar_cpp), Edge(dax_h, yow_h),
-    Edge(yow_h, bar_cpp), Edge(yow_h, zag_cpp),
-    Edge(boz_h, bar_cpp), Edge(boz_h, zig_cpp), Edge(boz_h, zag_cpp),
-    Edge(zow_h, foo_cpp),
-    Edge(foo_cpp, foo_o),
-    Edge(foo_o, libfoobar_a),
-    Edge(bar_cpp, bar_o),
-    Edge(bar_o, libfoobar_a),
-    Edge(libfoobar_a, libzigzag_a),
-    Edge(zig_cpp, zig_o),
-    Edge(zig_o, libzigzag_a),
-    Edge(zag_cpp, zag_o),
-    Edge(zag_o, libzigzag_a),
-    Edge(libzigzag_a, killerapp)
-  };
-  const int nedges = sizeof(used_by)/sizeof(Edge);
-  int weights[nedges];
-  std::fill(weights, weights + nedges, 1);
-
-  using namespace boost;
-
-  typedef adjacency_list< vecS, vecS, directedS,
-      property< vertex_color_t, default_color_type >,
-      property< edge_weight_t, int >
-    > Graph;
-  Graph g(used_by, used_by + nedges, weights, N);
-
-  write_graphviz(std::cout, g, label_writer(name));
+  // cout<<master<<" marry "<<slave<<endl;
+  // for(unsigned i=0;i<=11;++i){
+  //   cout<<in_degree(i,g)<<endl;
+  //   if(in_degree(i,g)!=0){
+  //     auto e=*(in_edges(i,g).first);
+  //     cout<<"from "<<source(e,g)<<" to "<<target(e,g)<<endl;
+  //   }
+  // }
 }

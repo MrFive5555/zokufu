@@ -24,14 +24,21 @@
 using namespace std;
 using namespace boost;
 
-#define DATA_DIRECTORY "dat"
-#define MATE_FILENAME execDir()+DATA_DIRECTORY+"/"+"mate.dot"
-#define TREE_FILENAME execDir()+DATA_DIRECTORY+"/"+"tree.dot"
-#define RAIN_FILENAME execDir()+DATA_DIRECTORY+"/"+"rain.dot"
-#define PERSON_FILNAME execDir()+DATA_DIRECTORY+"/"+"person.csv"
+// #define DATA_DIRECTORY "dat"
+// #define MATE_FILENAME execDir()+DATA_DIRECTORY+"/"+"mate.dot"
+// #define TREE_FILENAME execDir()+DATA_DIRECTORY+"/"+"tree.dot"
+// #define RAIN_FILENAME execDir()+DATA_DIRECTORY+"/"+"rain.dot"
+// #define PERSON_FILNAME execDir()+DATA_DIRECTORY+"/"+"person.csv"
+#define MATE_FILENAME "dat/mate.dot"
+#define TREE_FILENAME "dat/tree.dot"
+#define RAIN_FILENAME "dat/rain.dot"
+#define PERSON_FILNAME "dat/person.csv"
 #define MALE string("male")
 #define FEMALE string("female")
 #define ROOT 0
+// #define TEST4(G){
+//   cout<<in_degree(4,G)<<endl;
+// }
 
 typedef adjacency_list<
   setS, // OutEdgeList, enforce the absence of parallel edges
@@ -61,7 +68,6 @@ typedef std::pair<int,int> E;
 typedef unsigned long id_type;
 typedef unsigned short date_t;
 
-extern string execDir();
+// extern string execDir();
 extern void display_dot(const string);
-
 #endif

@@ -12,13 +12,6 @@ void complain_exit(const string s){
 	cout<<s<<endl;
 	exit(1);
 }
-bool file_both_exist(){
-	return(
-		ifstream(execDir()+MATE_FILENAME)&&
-		ifstream(execDir()+TREE_FILENAME)&&
-		ifstream(execDir()+PERSON_FILNAME)
-	);
-}
 void sure(const string msg){
 	cout<<msg<<endl;
 	cout<<"Press <Enter> to proceed, <Ctrl-C> to abort: "<<endl;

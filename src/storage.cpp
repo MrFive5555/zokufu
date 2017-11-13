@@ -55,8 +55,21 @@ void storage::mate_might_birth(const vector<id_type> v){
 	const id_type slave=v[1];
 	if(!vertex_exist(master,tree)||in_degree(master,tree)<=0)
 		throw runtime_error("The first person with isn't part of the family.");
-	if(vertex_exist(slave,tree)&&in_degree(slave,tree)>0)
+	{
+		cout<<master<<" marry "<<slave<<endl;
+		cout<<in_degree(slave,tree)<<endl;
+		auto e=*(in_edges(slave,tree).first);
+		cout<<"from "<<source(e,tree)<<" to "<<target(e,tree)<<endl;
+	}
+	if(vertex_exist(slave,tree)&&in_degree(slave,tree)>0){
+		{
+			cout<<master<<" marry "<<slave<<endl;
+			cout<<in_degree(slave,tree)<<endl;
+			auto e=*(in_edges(slave,tree).first);
+			cout<<"from "<<source(e,tree)<<" to "<<target(e,tree)<<endl;
+		}
 		throw runtime_error("Second person is already in the family, incest forbidden");
+	}
 	// add mate
 	add_edge(master,slave,mate);
 	for(size_t i=2;i!=v.size();++i){
@@ -123,7 +136,6 @@ void storage::sync(){
 	/*
 	* 	write mate, tree to corresponding files
 	*/
-	// add_edge(0,1,tree);
 	ofstream ofsS[]{ofstream(MATE_FILENAME), ofstream(TREE_FILENAME), ofstream(RAIN_FILENAME)};
   write_graphviz(ofsS[0],mate);
   write_graphviz(ofsS[1],tree);
