@@ -45,6 +45,7 @@ using boost::graph_traits;
 * Optimize -O3 on final release
 * sync() writes PERSON_FILENAME(person.csv)?
 * implement a (very long, 9bits?) bitset imitation, user deceide whether to label name/id/gender/...
+* stable test ("xxxx"?)
 
 # Done
 

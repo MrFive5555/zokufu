@@ -1,22 +1,62 @@
 #include"main.h"
 #include"person.h"
 #include"storage.h"
-
 using namespace std;
 using namespace boost;
 using namespace io; // extract names from csv.h
-
+// local helper funcs
 template<typename g_t>
 bool vertex_exist(id_type id,g_t g){
 	return num_vertices(g)>id;
 }
-
 template<typename g_t>
 bool exist_and_non_naked(id_type id,g_t g){
 	return vertex_exist(id,g)&&degree(id,g)>0;
 }
-
-// singleton jibberjabber
+template<typename G>
+void csv_into_graph(const char* fn,G& g){
+	// not any verifying
+	io::CSVReader<
+		2, // column_count
+		trim_chars<' ', '\t'>,
+		no_quote_escape<','>,
+		throw_on_overflow,
+		single_and_empty_line_comment<'#'>
+	>in(fn);
+	in.read_header(io::ignore_extra_column,G_CSV_COL1,G_CSV_COL2);
+	id_type id1,id2;
+	while(in.read_row(id1,id2))
+		add_edge(id1,id2,g);
+}
+template<typename G>
+void to_csv(const char* fn,const G& g){
+	ofstream ofs(fn);
+	auto itp=edges(g);
+	typedef typename graph_traits<G>::edge_descriptor E;
+	ofs<<G_CSV_COL1<<","<<G_CSV_COL2<<endl;
+	for_each(itp.first,itp.second,[&](const E e){
+		ofs<<source(e,g)<<","<<target(e,g)<<endl;
+	});
+	ofs.close();
+}
+template<typename G>
+void debug_graph(const G& g){
+	cout<<"-------------"<<endl;
+	typedef typename graph_traits<G>::edge_iterator EI;
+	typedef typename graph_traits<G>::edge_descriptor E;
+	const std::pair<EI, EI> itp=edges(g);
+	for_each(itp.first,itp.second,[&](const E e){
+		cout<<source(e,g)<<" -> "<<target(e,g)<<endl;
+	});
+	cout<<"-------------"<<endl;
+}
+// void display_dot(const string dotfile){
+  // string noext(dotfile);
+  // while(noext.back()!='.')
+    // noext.pop_back();
+  // system((string()+"dot -Tsvg -O "+dotfile).c_str());
+  // system((string()+"chromium-browser "+dotfile+".svg").c_str());
+// }
 storage* storage::instance=nullptr;
 storage* storage::getInstance(){
   // We never release the pointer. Leakage is ok.
@@ -25,16 +65,15 @@ storage* storage::getInstance(){
   return instance;
 }
 void storage::init(){
-	// add_edge(0,1,tree);
 	add_vertex(tree);
 }
-void storage::display() const{
-	for(auto& r:{MATE_FILENAME,TREE_FILENAME,RAIN_FILENAME})
-		display_dot(r);
-}
+// void storage::display() const{
+// 	for(auto& r:{MATE_FILENAME,TREE_FILENAME,RAIN_FILENAME})
+// 		display_dot(r);
+// }
 void storage::attach_to_root(id_type r){
 	personExist(r);
-	if(out_degree(ROOT,tree)!=0)
+	if(vertex_exist(ROOT,tree)&&out_degree(ROOT,tree)!=0)
 		throw runtime_error("Root cannot have 2 subsprings");
 	if(exist_and_non_naked(r,mate)||exist_and_non_naked(r,tree)||exist_and_non_naked(r,rain))
 		throw runtime_error("You can only attach a bachelor(no wife no son) to root");
@@ -107,13 +146,16 @@ void storage::load(){
 		Person p{name,gender,birth_year,birth_month,birth_day,death_year,death_month,death_day};
 		idMap.emplace(id,p);
 	}
-	ifstream ifsS[]{ifstream(MATE_FILENAME), ifstream(TREE_FILENAME), ifstream(RAIN_FILENAME)};
-	dynamic_properties dp(ignore_other_properties);
-  read_graphviz(ifsS[0],mate,dp);
-  read_graphviz(ifsS[1],tree,dp);
-  read_graphviz(ifsS[2],rain,dp);
-  for(auto& r:ifsS)
-  	r.close();
+	// ifstream ifsS[]{ifstream(MATE_FILENAME), ifstream(TREE_FILENAME), ifstream(RAIN_FILENAME)};
+	csv_into_graph(MATE_FILENAME,mate);
+	csv_into_graph(TREE_FILENAME,tree);
+	csv_into_graph(RAIN_FILENAME,rain);
+	// edges(mate);
+	// debug_graph(mate);
+	// debug_graph(tree);
+	// debug_graph(rain);
+  // for(auto& r:ifsS)
+  	// r.close();
 }
 
 // template <class Name>
@@ -136,12 +178,13 @@ void storage::sync(){
 	/*
 	* 	write mate, tree to corresponding files
 	*/
-	ofstream ofsS[]{ofstream(MATE_FILENAME), ofstream(TREE_FILENAME), ofstream(RAIN_FILENAME)};
-  write_graphviz(ofsS[0],mate);
-  write_graphviz(ofsS[1],tree);
-  write_graphviz(ofsS[2],rain);
-  for(auto& r:ofsS)
-  	r.close();
+	// ofstream ofsS[]{ofstream(MATE_FILENAME), ofstream(TREE_FILENAME), ofstream(RAIN_FILENAME)};
+	// write 3 csv graphs
+  // for(auto& r:ofsS)
+  // 	r.close();
+	to_csv(MATE_FILENAME,mate);
+	to_csv(TREE_FILENAME,tree);
+	to_csv(RAIN_FILENAME,rain);
 }
 void storage::personExist(id_type r)const{
 	if(idMap.find(r)==idMap.end())

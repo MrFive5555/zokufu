@@ -44,7 +44,7 @@ function f3(){
 	# # subspring of Kim Jong-un
 	# $E m 5 6 7
 	# display
-	$E d
+	# $E d
 	# test incest
 	# 
 	# test child wrench

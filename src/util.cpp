@@ -52,21 +52,3 @@ string execDir(){
 
 
 
-
-#if defined( _WIN32 ) || defined ( _WIN64 )
-// >>> Windows
-#error "display_dot() unimplementated for windows"
-// <<< Windows
-#elif defined( __linux__ ) || defined ( __gnu_linux__ )
-// >>> Linux
-void display_dot(const string dotfile){
-  // string noext(dotfile);
-  // while(noext.back()!='.')
-    // noext.pop_back();
-  system((string()+"dot -Tsvg -O "+dotfile).c_str());
-  system((string()+"chromium-browser "+dotfile+".svg").c_str());
-}
-// <<< Linux
-#else
-  #error "Unsupported OS"
-#endif

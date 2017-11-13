@@ -23,7 +23,7 @@ public:
 // interface
 // use the first letter as CLI parameter
   void init();
-  void display() const;
+  // void display() const;
   // a new member which is directly(temporarily) attached to root
   // divide_and_conqueror, combine later
   void attach_to_root(id_type id);

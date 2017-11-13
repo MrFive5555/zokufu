@@ -373,3 +373,79 @@ digraph G {
 4->2 ;
 4->3 ;
 }
+
+# F_LINK=-L lib  -lboost_regex -lboost_graph
+F_LINKD=-L lib/ -Wl,-rpath=lib/
+F_LINKF=-lboost_regex -lboost_graph
+
+// #define DATA_DIRECTORY "dat"
+// #define MATE_FILENAME execDir()+DATA_DIRECTORY+"/"+"mate.dot"
+// #define TREE_FILENAME execDir()+DATA_DIRECTORY+"/"+"tree.dot"
+// #define RAIN_FILENAME execDir()+DATA_DIRECTORY+"/"+"rain.dot"
+// #define PERSON_FILNAME execDir()+DATA_DIRECTORY+"/"+"person.csv"
+
+// #define TEST4(G){
+//   cout<<in_degree(4,G)<<endl;
+// }
+
+  // listS, // OutEdgeList
+  // listS, // VertexList
+
+  // listS, // OutEdgeList
+  // listS, // VertexList
+
+// extern string execDir();
+
+
+
+#if defined( _WIN32 ) || defined ( _WIN64 )
+// >>> Windows
+#error "display_dot() unimplementated for windows"
+// <<< Windows
+#elif defined( __linux__ ) || defined ( __gnu_linux__ )
+// >>> Linux
+// <<< Linux
+#else
+  #error "Unsupported OS"
+#endif
+dynamic_properties dp(ignore_other_properties);
+  read_graphviz(ifsS[0],mate,dp);
+  read_graphviz(ifsS[1],tree,dp);
+  read_graphviz(ifsS[2],rain,dp);
+
+  write_graphviz(ofsS[0],mate);
+  write_graphviz(ofsS[1],tree);
+  write_graphviz(ofsS[2],rain);
+
+---------
+mate.csv
+---------
+v1,v2
+2,1
+3,4
+
+---------
+tree.csv
+---------
+v1,v2
+0,2
+2,3 
+2,10
+2,11
+3,13
+3,5
+3,6
+3,14
+
+---------
+rain.csv
+---------
+v1,v2
+0,2
+1,3 
+1,10
+1,11
+4,13
+4,5
+4,6
+4,14

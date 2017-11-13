@@ -41,12 +41,18 @@ int main(int argc, char** argv) {
 			s->sync();
 			exit(0);
 		}
-		if(COMMAND("d")){
-			// don't read file
-			// just call graphviz(dot) and chromium-browser 
-			s->display();
+		if(COMMAND("xxxx")){
+			s->load();
+			sure("Read properly, and sync won't corrupt? ");
+			s->sync();
 			exit(0);
 		}
+		// if(COMMAND("d")){
+		// 	// don't read file
+		// 	// just call graphviz(dot) and chromium-browser 
+		// 	s->display();
+		// 	exit(0);
+		// }
 		// commands below requires reading file at the beginning and writing file at the end
 		if(COMMAND("a")){
 			s->load();
