@@ -19,6 +19,18 @@ using boost::graph_traits;
 	* maybe some csv op commmands
 * time.h time struct
 * Focus color
+* 5-bit-wide bitset, user deceide whether to label name/id/..., color gender/...
+
+| No. | related attr | whether or not do ... |
+| -   | -            | -                     |
+| 0   | id           | display in label      |
+| 1   | name         | display in label      |
+| 2   | gender       | color vertex          |
+| 3   | birth        | display in label      |
+| 4   | death        | display in label      |
+
+default "11100"
+
 
 ###### Unread
 
@@ -44,19 +56,6 @@ using boost::graph_traits;
 
 * Optimize -O3 on final release
 * sync() writes PERSON_FILENAME(person.csv)?
-* 5-bit-wide bitset, user deceide whether to label name/id/..., color gender/...
-
-| No. | related attr | whether or not do ... |
-| -   | -            | -                     |
-| 0   | id           | display in label      |
-| 1   | name         | display in label      |
-| 2   | gender       | color vertex          |
-| 3   | birth        | display in label      |
-| 4   | death        | display in label      |
-
-default "11100"
-
-* stable test ("xxxx"?)
 
 # Done
 
@@ -68,5 +67,6 @@ default "11100"
 * sh build boost_graph boost_regex
 * create a folder for csv/dot data storage, seperate from display(d)
 * display test.sh result after stripping chromium warnings
+* stable test ("xxxx"?)
 
 

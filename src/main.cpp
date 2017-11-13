@@ -1,5 +1,6 @@
-#include"main.h"
+#include"def.h"
 #include"storage.h"
+#include"include.h"
 #define COMMAND(C) strcmp(argv[1],C)==0
 #define RED "\033[31m"
 #define RESET "\033[0m"
@@ -35,13 +36,15 @@ int main(int argc, char** argv) {
 		// read but not write
 		if(COMMAND("d")){
 			s->load();
-			if(argc<=2)
-				s->display(format_t("11100"));
-			else{
-				if(strlen(argv[2])!=BITSETWIDTH)
-					throw runtime_error(string()+"formatter is not "+to_string(BITSETWIDTH)+" bits wide");
-				s->display(format_t(argv[2]));
-			}
+			// if(argc<=2)
+			// 	s->display(format_t("11100"));
+			// else{
+			// 	if(strlen(argv[2])!=BITSETWIDTH)
+			// 		throw runtime_error(string()+"formatter is not "+to_string(BITSETWIDTH)+" bits wide");
+			// 	s->display(format_t(argv[2]));
+			// }
+			s->display();
+			s->sync();
 			exit(0);
 		}
 		// write but not read

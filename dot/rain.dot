@@ -1,0 +1,24 @@
+digraph G {
+0[label="0 root 0",color=red,style=invis];
+1[label="1 金英淑 3",color=red,style=solid];
+2[label="2 金日成 0",color=blue,style=invis];
+3[label="3 金正日 1",color=blue,style=solid];
+4[label="4 高英姫 4",color=red,style=solid];
+5[label="5 金正恩 1",color=blue,style=solid];
+6[label="6 李雪主 1",color=red,style=solid];
+7[label="7 金主爱 0",color=red,style=invis];
+8[label="8 成蕙琳 0",color=red,style=invis];
+9[label="9 金正男 0",color=blue,style=invis];
+10[label="10 金敬姬 1",color=red,style=solid];
+11[label="11 张成泽 1",color=blue,style=solid];
+12[label="12 金雪松 0",color=red,style=invis];
+13[label="13 金正哲 1",color=blue,style=solid];
+14[label="14 金与正 1",color=red,style=solid];
+1->3 ;
+1->10 ;
+1->11 ;
+4->13 ;
+4->5 ;
+4->6 ;
+4->14 ;
+}

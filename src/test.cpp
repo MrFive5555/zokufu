@@ -1,4 +1,5 @@
-#include"main.h"
+#include"def.h"
+#include"include.h"
 int main(){
   Digraph g;
   dynamic_properties dp;

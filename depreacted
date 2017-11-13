@@ -268,7 +268,7 @@ bool file_both_exist(){
 	);
 }
 
-#include"main.h"
+#include"def.h"
 using namespace std;
 
 
@@ -454,3 +454,19 @@ v1,v2
 # dot_demo/*.svg
 *.svg
 *.dot
+
+
+  {
+    cout<<master<<" marry "<<slave<<endl;
+    cout<<in_degree(slave,tree)<<endl;
+    auto e=*(in_edges(slave,tree).first);
+    cout<<"from "<<source(e,tree)<<" to "<<target(e,tree)<<endl;
+  }
+
+    {
+      cout<<master<<" marry "<<slave<<endl;
+      cout<<in_degree(slave,tree)<<endl;
+      auto e=*(in_edges(slave,tree).first);
+      cout<<"from "<<source(e,tree)<<" to "<<target(e,tree)<<endl;
+    }
+

@@ -1,10 +1,14 @@
-#include"main.h"
-#include"person.h"
 #include"storage.h"
+#include"def.h"
+#include"include.h"
 using namespace std;
 using namespace boost;
 using namespace io; // extract names from csv.h
 // local helper funcs
+void personExist(id_type r,const idmap_t* p){
+	if(p->find(r)==p->end())
+		throw runtime_error(string()+"person with id "+to_string(r)+" doesn't exist");
+}
 template<typename g_t>
 bool vertex_exist(id_type id,g_t g){
 	return num_vertices(g)>id;
@@ -61,47 +65,69 @@ void Storage::init(){
 	add_vertex(tree);
 }
 namespace tmp{
-idmap_t* theft=nullptr;
+const idmap_t* theft=nullptr;
 template<class G>
 class undefault_writer {
 public:
   undefault_writer()=delete;
-  undefault_writer(G& g_,format_t f_):g(g_),f(f_){}
+  undefault_writer(G& g_):g(g_){}
   void operator()(std::ostream&) const {
   }
   template <class VorE>
   void operator()(std::ostream& os, const VorE& x) const {
-    // os<<"[shape=\"diamond\"]";
-    // os<<"[style=\"invis\"]";
-    // os<<"[label=\"degree="<<degree(0,g)<<"\"]";
-    os<<"[label=\"in degree="<<in_degree(x,g)<<"\"]";
+  	personExist(x,theft);
+    // // os<<"[shape=\"diamond\"]";
+    // // os<<"[style=\"invis\"]";
+    // // os<<"[label=\"degree="<<degree(0,g)<<"\"]";
+    // os<<"[label=\"in degree="<<in_degree(x,g)<<"\"]";
+  	os<<"["
+  		<<"label="
+  			<<"\""
+  				<<x
+  				<<" "
+  				<<theft->at(x).name
+  				<<" "
+  				<<degree(x,g)
+  			<<"\""
+  		<<","
+  		<<"color="<<(theft->at(x).gender==FEMALE?"red":"blue")
+  		<<","
+  		<<"style="<<(degree(x,g)==0?"invis":"solid")
+  		<<"]";
+
   }
 private:
   const G& g;
-  format_t f;
 };
+} // end namespace tmp
+void display_dot(const string dotfile){
+  string noext(dotfile);
+  while(noext.back()!='.')
+    noext.pop_back();
+  system((string()+"dot -Tsvg -O "+dotfile).c_str());
+  sleep(1);
+  system((string()+"chromium-browser "+dotfile+".svg").c_str());
+  sleep(1);
 }
-void Storage::display(const format_t f)const{
+void Storage::display()const{
 	// write graphviz-dot with customized label writer
 	// compile graphviz-dot to svg
 	// invoke chromium-browser to reander svg
 
-// void display_dot(const string dotfile){
-  // string noext(dotfile);
-  // while(noext.back()!='.')
-    // noext.pop_back();
-  // system((string()+"dot -Tsvg -O "+dotfile).c_str());
-  // system((string()+"chromium-browser "+dotfile+".svg").c_str());
-// }
 
-	// theft=idMap;
-	// ofstream ofsS={ofstream(MATE_STORAGE),ofstream(TREE_STORAGE),ofstream(RAIN_STORAGE)};
-	// write_graphviz(ofsS[0],mate,undefault_writer(g))
-	// write_graphviz(ofsS[1],tree,undefault_writer(g))
-	// write_graphviz(ofsS[2],rain,undefault_writer(g))
+	tmp::theft=&idMap;
+	ofstream ofsS[]={ofstream(MATE_PRINT),ofstream(TREE_PRINT),ofstream(RAIN_PRINT)};
+	cout<<"Writing dot files..."<<endl;
+	write_graphviz(ofsS[0],mate,tmp::undefault_writer<const Ugraph&>(mate));
+	write_graphviz(ofsS[1],tree,tmp::undefault_writer<const Digraph&>(tree));
+	write_graphviz(ofsS[2],rain,tmp::undefault_writer<const Digraph&>(rain));
+	for(auto& r:ofsS)
+		r.close();
+	for(auto i:{MATE_PRINT,TREE_PRINT,RAIN_PRINT})
+		display_dot(i);
 }
 void Storage::attach_to_root(id_type r){
-	personExist(r);
+	personExist(r,&idMap);
 	if(vertex_exist(ROOT,tree)&&out_degree(ROOT,tree)!=0)
 		throw runtime_error("Root cannot have 2 subsprings");
 	if(exist_and_non_naked(r,mate)||exist_and_non_naked(r,tree)||exist_and_non_naked(r,rain))
@@ -117,25 +143,13 @@ void Storage::mate_might_birth(const vector<id_type> v){
 		throw runtime_error("root can't have children");
 	// exist
 	for(auto r:v){
-		personExist(r);
+		personExist(r,&idMap);
 	}
 	const id_type master=v[0];
 	const id_type slave=v[1];
 	if(!vertex_exist(master,tree)||in_degree(master,tree)<=0)
 		throw runtime_error("The first person with isn't part of the family.");
-	{
-		cout<<master<<" marry "<<slave<<endl;
-		cout<<in_degree(slave,tree)<<endl;
-		auto e=*(in_edges(slave,tree).first);
-		cout<<"from "<<source(e,tree)<<" to "<<target(e,tree)<<endl;
-	}
 	if(vertex_exist(slave,tree)&&in_degree(slave,tree)>0){
-		{
-			cout<<master<<" marry "<<slave<<endl;
-			cout<<in_degree(slave,tree)<<endl;
-			auto e=*(in_edges(slave,tree).first);
-			cout<<"from "<<source(e,tree)<<" to "<<target(e,tree)<<endl;
-		}
 		throw runtime_error("Second person is already in the family, incest forbidden");
 	}
 	// add mate
@@ -215,11 +229,6 @@ void Storage::sync(){
 	to_csv(TREE_STORAGE,tree);
 	to_csv(RAIN_STORAGE,rain);
 }
-void Storage::personExist(id_type r)const{
-	if(idMap.find(r)==idMap.end())
-		throw runtime_error(string()+"person with id "+to_string(r)+" doesn't exist");
-}
-
 // new, init, read
 Storage::Storage()=default;
 

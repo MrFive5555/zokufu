@@ -1,29 +1,10 @@
-// main.h >>>
+// def.h >>>
 // 	system includes
 // 	typedefs
 //  defines
 // <<<
-#ifndef MAIN_H
-#define MAIN_H
-
-#include<iostream>
-#include<fstream>
-#include<cstring>
-#include<stdexcept>
-#include<ctime>
-#include<climits>
-#include<string>
-#include<map>
-#include<algorithm>
-#include<bitset>
-#include<boost/graph/graph_traits.hpp>
-#include<boost/graph/adjacency_list.hpp>
-#include<boost/graph/graphviz.hpp>
-#include<boost/graph/dijkstra_shortest_paths.hpp>
-#define CSV_IO_NO_THREAD // avoid -lpthread
-#include"csv.h"
-using namespace std;
-using namespace boost;
+#pragma once
+#include"include.h"
 #define MATE_STORAGE "dat/mate.csv"
 #define TREE_STORAGE "dat/tree.csv"
 #define RAIN_STORAGE "dat/rain.csv"
@@ -60,7 +41,24 @@ typedef graph_traits<Ugraph>::vertex_descriptor Vertex_u;
 typedef std::pair<int,int> E;
 typedef unsigned long id_type;
 typedef unsigned short date_t;
-typedef bitset<BITSETWIDTH> format_t;
-#include"person.h"
-typedef map<id_type,Person> idmap_t;
-#endif
+struct Person{
+  // a person's birthday and gender cannot be changed
+  // Person()=delete;
+  // Person(string name, Date birthday, Gender gender) : name(name), birthday(birthday), gender(gender) {}
+  // Person
+  
+  /*
+  * 对错误或未定义的Date，所有时间都定为0
+  */
+  // 1(id)+8(attr)=9(cols in csv)
+  const string name;
+  const string gender;
+
+  const date_t birth_year;
+  const date_t birth_month;
+  const date_t birth_day;
+
+  const date_t death_year;
+  const date_t death_month;
+  const date_t death_day;
+};typedef map<id_type,Person> idmap_t;

@@ -1,6 +1,6 @@
 #ifndef STORAGE_H
 #define STORAGE_H
-#include "main.h"
+#include "def.h"
 
 /*
 * id号的类型
@@ -23,7 +23,8 @@ public:
 // interface
 // use the first letter as CLI parameter
   void init();
-  void display(const format_t) const;
+  // void display(const format_t) const;
+  void display() const;
   // a new member which is directly(temporarily) attached to root
   // divide_and_conqueror, combine later
   void attach_to_root(id_type id);
@@ -35,7 +36,6 @@ private:
   // singleton
   Storage();
   id_type getNewId()const;
-  void personExist(id_type)const;
 // data members
 private:
   static Storage* instance;
