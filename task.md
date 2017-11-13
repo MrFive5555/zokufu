@@ -44,10 +44,10 @@ using boost::graph_traits;
 * Add relationship ("birth()"?) (Parameter Pack ?)
 * Optimize -O3 on final release
 * sh build boost_graph boost_regex
+* sync() writes PERSON_FILENAME ?
 
 # Done
 
-*	1 ~~marriage~~ mate digraph and 1 hierarchy graph
 * Output to graphviz
 * In g++ command, put -lxx after .o files
 * read graphviz

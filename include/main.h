@@ -31,6 +31,7 @@ using namespace boost;
 #define PERSON_FILNAME execDir()+"person.csv"
 #define MALE string("male")
 #define FEMALE string("female")
+#define ROOT 0
 
 typedef adjacency_list<
   setS, // OutEdgeList, enforce the absence of parallel edges

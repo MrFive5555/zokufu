@@ -170,8 +170,28 @@ boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::ch
 	// check incest
 	// if
 
+	// cout<<"syncing"<<endl;
+	// add_edge(0,5,tree);
+	// ofstream h("tree.dot");
+	
+	// ofstream m(MATE_FILENAME);
+	// ofstream t(TREE_FILENAME);
+	// ofstream r(RAIN_FILENAME);
+ //  m.close();
+ //  t.close();
+ //  r.close();
 
 
+// #include"read_graphviz_new.cpp"
+
+	// // switch, father goes first
+	// if(idMap.at(v[0]).gender==FEMALE)
+	// 	std::swap(v[0],v[1]);
+
+	// // check gender
+	// if(std::tie(idMap.at(master).gender,idMap.at(slave).gender)!=make_tuple(MALE,FEMALE))
+	// 	throw runtime_error("No homosexuality please");
+	// incest
 
 
 

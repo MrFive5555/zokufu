@@ -41,23 +41,27 @@ int main(int argc, char** argv) {
 			complain();
 			exit(1);
 		}
-		if(COMMAND("init")){
+		if(COMMAND("i")){
 			sure("Are you sure to delete everyone and initialize?");
 			s->init();
 			s->sync();
 			exit(0);
 		}
-		if(COMMAND("display")){
+		if(COMMAND("d")){
 			s->display();
 			exit(0);
 		}
 	}
-	// the ? number of choices below requires reading file
-	s->load();
+	// commands below requires reading file at the beginning and writing file at the end
 	{
-		if(COMMAND("mate")){
-			const vector<id_type> idVec=getIdParameters();
-			s->mate_might_birth(idVec);
+		if(COMMAND("a")){
+			s->load();
+			s->attach_to_root(getIdParameters()[0]);
+			s->sync();
+		}
+		if(COMMAND("m")){
+			s->load();
+			s->mate_might_birth(getIdParameters());
 			s->sync();
 		}
 	}
