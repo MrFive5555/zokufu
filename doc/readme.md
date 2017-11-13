@@ -195,7 +195,8 @@ Error: The first person with isn't part of the family.
 ```
 ![mate](mate.dot.svg)
 ![tree](tree.dot.svg)
-![rain](train.dot.svg)
+![rain](rain.dot.svg)
+![ntr](ntr.dot.svg)
 
 解释:
 >执行该程序时需要加参数,有三个可选参数
@@ -218,20 +219,25 @@ Error: The first person with isn't part of the family.
 * 根据汉谟拉比法典,每人33.3%
 
 ###### 吴天扬
+
 * 存储顾问
 * 文档
+* 交作业
+
 ###### 吴德润
+
 * repo管理
 * 矢量图生成
 * 主要实现
+
 ###### 伍兆贤
+
 * 提供头文件, 指定接口
 * 系统设计
 
-
 # 项目总结
 
-* 相信,我两个通宵不会要命
+* 信春哥,几个通宵都不怕
 
 # 程序清单
 
