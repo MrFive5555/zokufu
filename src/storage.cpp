@@ -50,6 +50,42 @@ void debug_graph(const G& g){
 	});
 	cout<<"-------------"<<endl;
 }
+Storage* Storage::instance=nullptr;
+Storage* Storage::getInstance(){
+  // We never release the pointer. Leakage is ok.
+  if(!instance)
+    instance=new Storage;
+  return instance;
+}
+void Storage::init(){
+	add_vertex(tree);
+}
+namespace tmp{
+idmap_t* theft=nullptr;
+template<class G>
+class undefault_writer {
+public:
+  undefault_writer()=delete;
+  undefault_writer(G& g_,format_t f_):g(g_),f(f_){}
+  void operator()(std::ostream&) const {
+  }
+  template <class VorE>
+  void operator()(std::ostream& os, const VorE& x) const {
+    // os<<"[shape=\"diamond\"]";
+    // os<<"[style=\"invis\"]";
+    // os<<"[label=\"degree="<<degree(0,g)<<"\"]";
+    os<<"[label=\"in degree="<<in_degree(x,g)<<"\"]";
+  }
+private:
+  const G& g;
+  format_t f;
+};
+}
+void Storage::display(const format_t f)const{
+	// write graphviz-dot with customized label writer
+	// compile graphviz-dot to svg
+	// invoke chromium-browser to reander svg
+
 // void display_dot(const string dotfile){
   // string noext(dotfile);
   // while(noext.back()!='.')
@@ -57,21 +93,14 @@ void debug_graph(const G& g){
   // system((string()+"dot -Tsvg -O "+dotfile).c_str());
   // system((string()+"chromium-browser "+dotfile+".svg").c_str());
 // }
-storage* storage::instance=nullptr;
-storage* storage::getInstance(){
-  // We never release the pointer. Leakage is ok.
-  if(!instance)
-    instance=new storage;
-  return instance;
+
+	// theft=idMap;
+	// ofstream ofsS={ofstream(MATE_STORAGE),ofstream(TREE_STORAGE),ofstream(RAIN_STORAGE)};
+	// write_graphviz(ofsS[0],mate,undefault_writer(g))
+	// write_graphviz(ofsS[1],tree,undefault_writer(g))
+	// write_graphviz(ofsS[2],rain,undefault_writer(g))
 }
-void storage::init(){
-	add_vertex(tree);
-}
-// void storage::display() const{
-// 	for(auto& r:{MATE_FILENAME,TREE_FILENAME,RAIN_FILENAME})
-// 		display_dot(r);
-// }
-void storage::attach_to_root(id_type r){
+void Storage::attach_to_root(id_type r){
 	personExist(r);
 	if(vertex_exist(ROOT,tree)&&out_degree(ROOT,tree)!=0)
 		throw runtime_error("Root cannot have 2 subsprings");
@@ -79,7 +108,7 @@ void storage::attach_to_root(id_type r){
 		throw runtime_error("You can only attach a bachelor(no wife no son) to root");
 	add_edge(ROOT,r,tree);
 }
-void storage::mate_might_birth(const vector<id_type> v){
+void Storage::mate_might_birth(const vector<id_type> v){
 	// size
 	if(v.size()<2)
 		throw runtime_error(">=2 people needed");
@@ -120,7 +149,7 @@ void storage::mate_might_birth(const vector<id_type> v){
 		add_edge(slave,v[i],rain);
 	}
 }
-void storage::load(){
+void Storage::load(){
 	/*
 	* read person file to idMap (immutable)
 	* read relationship file to g
@@ -133,7 +162,7 @@ void storage::load(){
 		throw_on_overflow,
 		// no_comment,
 		single_and_empty_line_comment<'#'>
-	>in(PERSON_FILNAME);
+	>in(PERSON_STORAGE);
 	in.read_header(io::ignore_extra_column,"id", "name","gender","birth_year","birth_month","birth_day","death_year","death_month","death_day");
 	id_type id;
 	string name,gender;
@@ -146,10 +175,10 @@ void storage::load(){
 		Person p{name,gender,birth_year,birth_month,birth_day,death_year,death_month,death_day};
 		idMap.emplace(id,p);
 	}
-	// ifstream ifsS[]{ifstream(MATE_FILENAME), ifstream(TREE_FILENAME), ifstream(RAIN_FILENAME)};
-	csv_into_graph(MATE_FILENAME,mate);
-	csv_into_graph(TREE_FILENAME,tree);
-	csv_into_graph(RAIN_FILENAME,rain);
+	// ifstream ifsS[]{ifstream(MATE_STORAGE), ifstream(TREE_STORAGE), ifstream(RAIN_STORAGE)};
+	csv_into_graph(MATE_STORAGE,mate);
+	csv_into_graph(TREE_STORAGE,tree);
+	csv_into_graph(RAIN_STORAGE,rain);
 	// edges(mate);
 	// debug_graph(mate);
 	// debug_graph(tree);
@@ -174,23 +203,23 @@ private:
   Graph& g_;
 };
 // write
-void storage::sync(){
+void Storage::sync(){
 	/*
 	* 	write mate, tree to corresponding files
 	*/
-	// ofstream ofsS[]{ofstream(MATE_FILENAME), ofstream(TREE_FILENAME), ofstream(RAIN_FILENAME)};
+	// ofstream ofsS[]{ofstream(MATE_STORAGE), ofstream(TREE_STORAGE), ofstream(RAIN_STORAGE)};
 	// write 3 csv graphs
   // for(auto& r:ofsS)
   // 	r.close();
-	to_csv(MATE_FILENAME,mate);
-	to_csv(TREE_FILENAME,tree);
-	to_csv(RAIN_FILENAME,rain);
+	to_csv(MATE_STORAGE,mate);
+	to_csv(TREE_STORAGE,tree);
+	to_csv(RAIN_STORAGE,rain);
 }
-void storage::personExist(id_type r)const{
+void Storage::personExist(id_type r)const{
 	if(idMap.find(r)==idMap.end())
 		throw runtime_error(string()+"person with id "+to_string(r)+" doesn't exist");
 }
 
 // new, init, read
-storage::storage()=default;
+Storage::Storage()=default;
 

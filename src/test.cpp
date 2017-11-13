@@ -2,8 +2,8 @@
 int main(){
   Digraph g;
   dynamic_properties dp;
-  cout<<TREE_FILENAME<<endl;
-  ifstream ifs(TREE_FILENAME);
+  cout<<TREE_STORAGE<<endl;
+  ifstream ifs(TREE_STORAGE);
   // read_graphviz(ifs,g);
   string gs="asdfasdf";
   read_graphviz(gs,g);
@@ -13,7 +13,7 @@ int main(){
   // write_graphviz(ofs,g);
   write_graphviz(cout,g);
 
-  // read_graphviz(ifstream(TREE_FILENAME),g,dp);
+  // read_graphviz(ifstream(TREE_STORAGE),g,dp);
 
 
   // cout<<master<<" marry "<<slave<<endl;

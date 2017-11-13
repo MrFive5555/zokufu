@@ -44,7 +44,18 @@ using boost::graph_traits;
 
 * Optimize -O3 on final release
 * sync() writes PERSON_FILENAME(person.csv)?
-* implement a (very long, 9bits?) bitset imitation, user deceide whether to label name/id/gender/...
+* 5-bit-wide bitset, user deceide whether to label name/id/..., color gender/...
+
+| No. | related attr | whether or not do ... |
+| -   | -            | -                     |
+| 0   | id           | display in label      |
+| 1   | name         | display in label      |
+| 2   | gender       | color vertex          |
+| 3   | birth        | display in label      |
+| 4   | death        | display in label      |
+
+default "11100"
+
 * stable test ("xxxx"?)
 
 # Done

@@ -1,7 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include<cstring>
-#include"person.h"
+#include"main.h"
 #include"storage.h"
 #define COMMAND(C) strcmp(argv[1],C)==0
 #define RED "\033[31m"
@@ -30,33 +27,40 @@ int main(int argc, char** argv) {
 	try{
 		argc_g=argc;
 		argv_g=argv;
-		storage* s=storage::getInstance();
-		// the two blocks below don't need to read file
+		Storage* s=Storage::getInstance();
+		// neighter read nor write file
 		if(argc<=1){
 			complain_exit("What do you want? Give me a parameter please");
 		}
+		// read but not write
+		if(COMMAND("d")){
+			s->load();
+			if(argc<=2)
+				s->display(format_t("11100"));
+			else{
+				if(strlen(argv[2])!=BITSETWIDTH)
+					throw runtime_error(string()+"formatter is not "+to_string(BITSETWIDTH)+" bits wide");
+				s->display(format_t(argv[2]));
+			}
+			exit(0);
+		}
+		// write but not read
 		if(COMMAND("i")){
 			sure("Are you sure to delete everyone and initialize?");
 			s->init();
 			s->sync();
 			exit(0);
 		}
-		if(COMMAND("xxxx")){
+		// read and write
+		if(COMMAND("r")){
 			s->load();
-			sure("Read properly, and sync won't corrupt? ");
+			sure("Read, do nothing, and write back(stability check)");
 			s->sync();
 			exit(0);
 		}
-		// if(COMMAND("d")){
-		// 	// don't read file
-		// 	// just call graphviz(dot) and chromium-browser 
-		// 	s->display();
-		// 	exit(0);
-		// }
-		// commands below requires reading file at the beginning and writing file at the end
 		if(COMMAND("a")){
 			s->load();
-			s->attach_to_root(getIdParameters()[0]);
+			s->attach_to_root(stoul(argv[2]));
 			s->sync();
 			exit(0);
 		}

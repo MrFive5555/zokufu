@@ -16,14 +16,14 @@
 * I have to change this type name ( "id_t" -> "id_type" )
 */
 
-class storage {
+class Storage {
 // methods
 public:
-  static storage* getInstance();
+  static Storage* getInstance();
 // interface
 // use the first letter as CLI parameter
   void init();
-  // void display() const;
+  void display(const format_t) const;
   // a new member which is directly(temporarily) attached to root
   // divide_and_conqueror, combine later
   void attach_to_root(id_type id);
@@ -33,17 +33,17 @@ public:
   void sync();
 private:
   // singleton
-  storage();
+  Storage();
   id_type getNewId()const;
   void personExist(id_type)const;
 // data members
 private:
-  static storage* instance;
+  static Storage* instance;
   // the following two things involves file operation
   Ugraph mate;
   Digraph tree;
   Digraph rain;
-  map<id_type,const Person> idMap;
+  idmap_t idMap;
 
   /*
   * 输入：void

@@ -21,7 +21,7 @@ default:
 			// storage*
 			// ofstream ofs;
 
-			// for(auto i:{RELATIONSHIP_FILENAME,PERSON_FILNAME}){
+			// for(auto i:{RELATIONSHIP_FILENAME,PERSON_STORAGE}){
 			// 	ofs.open(i,ios_base::out|ios_base::trunc)
 			// 	ofs.close();
 			// }
@@ -174,9 +174,9 @@ boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::ch
 	// add_edge(0,5,tree);
 	// ofstream h("tree.dot");
 	
-	// ofstream m(MATE_FILENAME);
-	// ofstream t(TREE_FILENAME);
-	// ofstream r(RAIN_FILENAME);
+	// ofstream m(MATE_STORAGE);
+	// ofstream t(TREE_STORAGE);
+	// ofstream r(RAIN_STORAGE);
  //  m.close();
  //  t.close();
  //  r.close();
@@ -194,9 +194,9 @@ boost::detail::graph::read_graphviz_new(std::__cxx11::basic_string<char, std::ch
 	// incest
 
 
-  // display_dot(MATE_FILENAME);
-  // display_dot(TREE_FILENAME);
-  // display_dot(RAIN_FILENAME);
+  // display_dot(MATE_STORAGE);
+  // display_dot(TREE_STORAGE);
+  // display_dot(RAIN_STORAGE);
 
 	if(make_tuple(degree(r,mate),degree(r,tree),degree(r,rain))!=make_tuple(0,0,0))
 
@@ -262,9 +262,9 @@ int main() {
 
 bool file_both_exist(){
 	return(
-		ifstream(execDir()+MATE_FILENAME)&&
-		ifstream(execDir()+TREE_FILENAME)&&
-		ifstream(execDir()+PERSON_FILNAME)
+		ifstream(execDir()+MATE_STORAGE)&&
+		ifstream(execDir()+TREE_STORAGE)&&
+		ifstream(execDir()+PERSON_STORAGE)
 	);
 }
 
@@ -379,10 +379,10 @@ F_LINKD=-L lib/ -Wl,-rpath=lib/
 F_LINKF=-lboost_regex -lboost_graph
 
 // #define DATA_DIRECTORY "dat"
-// #define MATE_FILENAME execDir()+DATA_DIRECTORY+"/"+"mate.dot"
-// #define TREE_FILENAME execDir()+DATA_DIRECTORY+"/"+"tree.dot"
-// #define RAIN_FILENAME execDir()+DATA_DIRECTORY+"/"+"rain.dot"
-// #define PERSON_FILNAME execDir()+DATA_DIRECTORY+"/"+"person.csv"
+// #define MATE_STORAGE execDir()+DATA_DIRECTORY+"/"+"mate.dot"
+// #define TREE_STORAGE execDir()+DATA_DIRECTORY+"/"+"tree.dot"
+// #define RAIN_STORAGE execDir()+DATA_DIRECTORY+"/"+"rain.dot"
+// #define PERSON_STORAGE execDir()+DATA_DIRECTORY+"/"+"person.csv"
 
 // #define TEST4(G){
 //   cout<<in_degree(4,G)<<endl;
@@ -449,3 +449,8 @@ v1,v2
 4,5
 4,6
 4,14
+
+# output in dot
+# dot_demo/*.svg
+*.svg
+*.dot
